@@ -2,6 +2,8 @@ package application;
 
 import application.configuration.ApplicationProperties;
 import application.factory.Operacao;
+import application.threads.ThreadProcess;
+import com.sun.scenario.effect.impl.sw.sse.SSEBlend_SRC_OUTPeer;
 
 import java.io.*;
 import java.math.BigInteger;
@@ -16,76 +18,50 @@ public class ClientMain {
     private static Logger logger = Logger.getLogger(Logger.GLOBAL_LOGGER_NAME);
     private static String IPADDRESS = "localhost";
 
+
     public static void main(String args[]) {
         Operacao operacao;
-        DatagramSocket clientSocket = null;
+
         Scanner scanner = new Scanner(System.in);
-/*
-        try {
-            clientSocket = new DatagramSocket();
-            InetAddress IPAddress = InetAddress.getByName(IPADDRESS);
-*/
-            //------- Atributos a serem enviados
-            Integer opcao;
-            BigInteger chave;
-            String valor = null;
-            //----------------------------------
 
+        //------- ATRIBUTOS A SEREM ENVIADOS
+        Integer opcaoMenu = 4;
+        BigInteger chave;
+        String valor = null;
+        //----------------------------------
 
-            //TODO criar um enum
-            logger.info("Digite o comando a executar:" +
-                            "\n [0] LER" +
-                            "\n [1] ESCREVER" +
-                            "\n [2] ATUALIZAR" +
-                            "\n [3] DELETAR");
-            do {
-                opcao = scanner.nextInt();
-            }while (opcao > 3 || opcao < 0);
+        //------- MENU
+        opcaoMenu = imprimirMenu(opcaoMenu, scanner);
+        //----------------------------------
 
-            logger.info("Digite o valor da chave:");
-            chave = scanner.nextBigInteger();
+        //------- RECEBER CHAVE E VALOR
+        System.out.println("--------------------");
+        System.out.println("Digite a chave:");
+        chave = scanner.nextBigInteger();
 
-            if(opcao==1||opcao==2)
-                valor = scanner.next();
-
-            Operacao op = new Operacao(chave,valor==null?"":valor,opcao);
-
-            logger.info("Total: "+op.convertData().length);
-
-
-
-
-
-
-
-
-
-/*
-
-
-
-            DatagramPacket sendPacket = new DatagramPacket(sendData, sendData.length, IPAddress, Integer.parseInt(port));
-            clientSocket.send(sendPacket);
-            clientSocket.close();
-
-        } catch (SocketException e) {
-            e.printStackTrace();
-        } catch (UnknownHostException e) {
-            e.printStackTrace();
-        } catch (UnsupportedEncodingException e) {
-            e.printStackTrace();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }finally {
-            clientSocket.close();
+        if(opcaoMenu == OpcoesMenu.CREATE.getValor() || opcaoMenu == OpcoesMenu.UPDATE.getValor()){
+            System.out.println("Digite o valor ");
+            valor = scanner.next();
         }
+        //----------------------------------
 
-        */
-
+        //------- CRIACAO DE THREADS
+        Thread t = new ThreadProcess(chave, valor, opcaoMenu);
+        t.start();
+        //----------------------------------
 
     }
 
-
-
+    public static int imprimirMenu(int opcao, Scanner scanner){
+        do {
+            OpcoesMenu[] menu = OpcoesMenu.values();
+            for (OpcoesMenu m : menu) {
+                System.out.printf("[%d] - %s%n", m.ordinal(), m.name());
+            }
+            System.out.println("Opção:");
+            opcao = scanner.nextInt();
+        }while (opcao > 3 || opcao < 0);
+        return opcao;
+    }
 
 }

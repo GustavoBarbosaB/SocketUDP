@@ -24,37 +24,42 @@ public class ServerMain {
         port = ApplicationProperties.getInstance().loadProperties().getProperty("server.port");
         logger.info("Porta do server = "+port);
 
-        byte[] receiveData = new byte[2000];
+        byte[] receiveData = new byte[1480];
         DatagramSocket serverSocket = null;
-        try {
-            serverSocket = new DatagramSocket(Integer.parseInt(port));
-            DatagramPacket receivePacket = new DatagramPacket(receiveData, receiveData.length);
-            serverSocket.receive(receivePacket);
 
-            byte[] result = receivePacket.getData();
-            byte[] b1 = SerializeEstado.getBytes(result,0,1);
-            int inteiro = SerializeEstado.readInt(b1);
+        while(true) {
+            try {
+                serverSocket = new DatagramSocket(Integer.parseInt(port));
+                DatagramPacket receivePacket = new DatagramPacket(receiveData, receiveData.length);
+                serverSocket.receive(receivePacket);
 
+                System.out.println(receivePacket.getData());
+                System.out.println(receivePacket.getData().length);
 
-            byte[] b2= SerializeEstado.getBytes(result,1,inteiro);
-            String string = SerializeEstado.readString(b2);
-
-            logger.info("inteiro: "+inteiro);
-            logger.info("string: "+string);
+                byte[] result = receivePacket.getData();
+                byte[] b1 = SerializeEstado.getBytes(result, 0, 1);
+                int inteiro = SerializeEstado.readInt(b1);
 
 
-            System.out.println("RECEIVED: " + inteiro);
-            System.out.println("RECEIVED: " + string);
+                byte[] b2 = SerializeEstado.getBytes(result, 1, inteiro);
+                String string = SerializeEstado.readString(b2);
+
+                logger.info("inteiro: " + inteiro);
+                logger.info("string: " + string);
 
 
-        } catch (SocketException e) {
-            e.printStackTrace();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }finally {
-            serverSocket.close();
+                System.out.println("RECEIVED: " + inteiro);
+                System.out.println("RECEIVED: " + string);
+
+
+            } catch (SocketException e) {
+                e.printStackTrace();
+            } catch (IOException e) {
+                e.printStackTrace();
+            } finally {
+                serverSocket.close();
+            }
         }
-
 
     }
 

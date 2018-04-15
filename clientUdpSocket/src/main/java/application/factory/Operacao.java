@@ -25,28 +25,30 @@ public class Operacao {
         ByteArrayOutputStream bos = new ByteArrayOutputStream();
         DataOutputStream dos = new DataOutputStream(bos);
         Integer tamChave;
-        Integer tamMsg;
+        Integer tamMsg = 0;
 
 
         try {
             tamChave = chave.toByteArray().length;
-            tamMsg = valor.getBytes("UTF-16").length-2;
+            if (valor != null)
+                tamMsg = valor.getBytes("UTF-16").length-2;
 
             //Escreve o comando
             dos.write(comando);
-            logger.info("1 byte comando");
+            //logger.info("1 byte comando");
             //Escreve o tamanho da chave
             dos.write(tamChave);
-            logger.info("1 byte tamanho da chave");
+            //logger.info("1 byte tamanho da chave");
             //Escreve a chave
             dos.write(chave.toByteArray());
-            logger.info(tamChave+" byte chave");
+            //logger.info(tamChave+" byte chave");
             //Escreve o tamanho da mensagem
             dos.write(tamMsg);
-            logger.info("1 byte tamanho da mensagem");
+            //logger.info("1 byte tamanho da mensagem");
             //Escreve a mensagem
-            dos.writeChars(valor);
-            logger.info(tamMsg+" byte mensagem");
+            if(valor != null)
+                dos.writeChars(valor);
+            logger.info(bos.toByteArray().length+" bytes da operacao toda");
 
             dos.flush();
 
