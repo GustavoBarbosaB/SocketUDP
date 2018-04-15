@@ -1,4 +1,4 @@
-package application;
+package application.threads;
 
 import java.util.logging.Logger;
 
