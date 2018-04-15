@@ -2,13 +2,13 @@ package application.threads;
 
 import java.util.logging.Logger;
 
-public class ThreadResults extends Thread{
+public class ThreadProcess extends Thread{
 
     //Todo substituir quando souber o resultado
     private String result;
     private Logger logger = Logger.getLogger(Logger.GLOBAL_LOGGER_NAME);
 
-    public ThreadResults(String result){
+    public ThreadProcess(String result){
         this.result=result;
     }
 
