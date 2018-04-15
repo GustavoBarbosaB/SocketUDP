@@ -3,11 +3,16 @@ package application;
 import java.io.ByteArrayInputStream;
 import java.io.DataInputStream;
 import java.io.IOException;
+import java.math.BigInteger;
 
 public class SerializeEstado {
 
     public static String readString(byte[] b) throws IOException {
-        return new String(b, "UTF-16");
+        return new String(b,"UTF-16");
+    }
+
+    public static BigInteger readBigInt(byte[] b) {
+        return new BigInteger(b);
     }
 
     public static int readInt(byte[] b) {

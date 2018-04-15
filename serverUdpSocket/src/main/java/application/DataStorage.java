@@ -1,9 +1,8 @@
 package application;
 
-import application.model.Operacao;
+import application.factory.Operacao;
 
 import java.math.BigInteger;
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.Queue;

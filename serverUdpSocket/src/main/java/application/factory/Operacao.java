@@ -1,11 +1,14 @@
-package application.model;
+package application.factory;
 
 public class Operacao {
 
-    Integer chave;
-    String valor;
-    Integer operacao;
+    private Integer chave;
+    private String valor;
+    private Integer operacao;
 
+
+    public Operacao() {
+    }
 
     public Operacao(Integer chave, String valor, Integer operacao) {
         this.chave = chave;
