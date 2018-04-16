@@ -6,6 +6,7 @@ import java.io.IOException;
 import java.math.BigInteger;
 import java.net.DatagramPacket;
 import java.net.DatagramSocket;
+import java.net.InetAddress;
 import java.net.SocketException;
 import java.util.ArrayList;
 import java.util.logging.Logger;
@@ -54,6 +55,13 @@ public class ServerMain {
                 logger.info("Chave: " + chave);
                 logger.info("Tamanho valor: " + tamValor);
                 logger.info("Valor: " + valor);
+
+                String resposta = "RECEBIDO COM SUCESSO";
+                byte[] dados = resposta.getBytes("UTF-8");
+
+                DatagramPacket sendPacket = new DatagramPacket(dados, dados.length, InetAddress.getByName("localhost"), 5003);
+
+                serverSocket.send(sendPacket);
 
 
             } catch (SocketException e) {
