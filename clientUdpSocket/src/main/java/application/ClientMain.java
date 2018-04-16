@@ -1,13 +1,11 @@
 package application;
 
 import application.configuration.ApplicationProperties;
-import application.factory.Operacao;
+import application.model.OpcoesMenu;
+import application.model.Operacao;
 import application.threads.ThreadProcess;
-import com.sun.scenario.effect.impl.sw.sse.SSEBlend_SRC_OUTPeer;
 
-import java.io.*;
 import java.math.BigInteger;
-import java.net.*;
 import java.util.Scanner;
 import java.util.logging.Logger;
 
@@ -29,26 +27,29 @@ public class ClientMain {
         BigInteger chave;
         String valor = null;
         //----------------------------------
+        while (true) {
+            //------- MENU
+            opcaoMenu = imprimirMenu(opcaoMenu, scanner);
+            //----------------------------------
+            if(opcaoMenu==10)
+                break;
 
-        //------- MENU
-        opcaoMenu = imprimirMenu(opcaoMenu, scanner);
-        //----------------------------------
+            //------- RECEBER CHAVE E VALOR
+            System.out.println("--------------------");
+            System.out.println("Digite a chave:");
+            chave = scanner.nextBigInteger();
 
-        //------- RECEBER CHAVE E VALOR
-        System.out.println("--------------------");
-        System.out.println("Digite a chave:");
-        chave = scanner.nextBigInteger();
+            if (opcaoMenu == OpcoesMenu.CREATE.getValor() || opcaoMenu == OpcoesMenu.UPDATE.getValor()) {
+                System.out.println("Digite o valor ");
+                valor = scanner.next();
+            }
+            //----------------------------------
 
-        if(opcaoMenu == OpcoesMenu.CREATE.getValor() || opcaoMenu == OpcoesMenu.UPDATE.getValor()){
-            System.out.println("Digite o valor ");
-            valor = scanner.next();
+            //------- CRIACAO DE THREADS
+            Thread t = new ThreadProcess(chave, valor, opcaoMenu);
+            t.start();
+            //----------------------------------
         }
-        //----------------------------------
-
-        //------- CRIACAO DE THREADS
-        Thread t = new ThreadProcess(chave, valor, opcaoMenu);
-        t.start();
-        //----------------------------------
 
     }
 
@@ -60,7 +61,7 @@ public class ClientMain {
             }
             System.out.println("Opção:");
             opcao = scanner.nextInt();
-        }while (opcao > 3 || opcao < 0);
+        }while ((opcao > 3 || opcao < 0) && opcao != 10);
         return opcao;
     }
 

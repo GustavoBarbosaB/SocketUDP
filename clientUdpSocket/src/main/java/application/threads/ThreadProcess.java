@@ -50,7 +50,7 @@ public class ThreadProcess extends Thread{
             clientSocket.receive(receivedPacket);
             String data = new String(receivedPacket.getData(), receivedPacket.getOffset(), receivedPacket.getLength());
 
-            System.out.println(data);
+            System.out.println("Resposta do servidor: "+data);
 
 
             clientSocket.close();
