@@ -9,11 +9,11 @@ import java.util.Queue;
 
 public class DataStorage {
 
-    public String getExecuted(BigInteger chave) {
+    public synchronized String getExecuted(BigInteger chave) {
         return executed.get(chave);
     }
 
-    public void addExecuted(BigInteger chave, String value) {
+    public synchronized void addExecuted(BigInteger chave, String value) {
         if(executed.containsKey(chave))
             executed.replace(chave,value);
         else
@@ -71,7 +71,7 @@ public class DataStorage {
     }
 
 
-    public void removeExecuted(BigInteger chave) {
+    public synchronized void removeExecuted(BigInteger chave) {
         executed.remove(chave);
     }
 }
