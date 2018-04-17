@@ -48,7 +48,7 @@ public class Operacao {
             //Escreve a mensagem
             if(valor != null)
                 dos.writeChars(valor);
-            logger.info(bos.toByteArray().length+" bytes da operacao toda");
+//            logger.info(bos.toByteArray().length+" bytes da operacao toda");
 
             dos.flush();
 

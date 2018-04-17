@@ -9,6 +9,17 @@ import java.util.Queue;
 
 public class DataStorage {
 
+    public String getExecuted(BigInteger chave) {
+        return executed.get(chave);
+    }
+
+    public void addExecuted(BigInteger chave, String value) {
+        if(executed.containsKey(chave))
+            executed.replace(chave,value);
+        else
+            this.executed.put(chave,value);
+    }
+
     private HashMap<BigInteger,String> executed;
     private Queue<Operacao> toLog;
     private Queue<Operacao> toRun;
@@ -60,5 +71,7 @@ public class DataStorage {
     }
 
 
-
+    public void removeExecuted(BigInteger chave) {
+        executed.remove(chave);
+    }
 }

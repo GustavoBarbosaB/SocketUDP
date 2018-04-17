@@ -33,7 +33,7 @@ public class SerializeEstado {
     }
 
     public static String readString(byte[] b) throws IOException {
-        return new String(b,"UTF-16");
+            return new String(b,"UTF-16");
     }
 
     public static BigInteger readBigInt(byte[] b) {

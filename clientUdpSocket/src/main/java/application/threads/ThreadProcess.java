@@ -30,28 +30,27 @@ public class ThreadProcess extends Thread{
     @Override
     public void run(){
 
-        Operacao operacao = new Operacao(chave, valor == null?null:valor, opcaoMenu);
+        Operacao operacao = new Operacao(chave, valor, opcaoMenu);
         byte[] dados = operacao.convertData();
 
         byte[] receivedData = new byte[1480];
         String resposta = "";
 
         try {
-            clientSocket = new DatagramSocket(5003);
+            clientSocket = new DatagramSocket();
             InetAddress IPAddress = InetAddress.getByName(IPADDRESS);
             DatagramPacket sendPacket = new DatagramPacket(dados, dados.length, IPAddress, Integer.parseInt(port));
-            System.out.println("enviado: " + dados);
-            System.out.println("tamanho enviado: " + dados.length);
+//            System.out.println("enviado: " + dados);
+//            System.out.println("tamanho enviado: " + dados.length);
 
             clientSocket.send(sendPacket);
-
-            // MENSAGEM VINDA DO SERVIDOR
-            DatagramPacket receivedPacket = new DatagramPacket(receivedData, receivedData.length);
-            clientSocket.receive(receivedPacket);
-            String data = new String(receivedPacket.getData(), receivedPacket.getOffset(), receivedPacket.getLength());
-
-            System.out.println("Resposta do servidor: "+data);
-
+            if(opcaoMenu==1) {
+                // MENSAGEM VINDA DO SERVIDOR
+                DatagramPacket receivedPacket = new DatagramPacket(receivedData, receivedData.length);
+                clientSocket.receive(receivedPacket);
+                String data = new String(receivedPacket.getData(), receivedPacket.getOffset(), receivedPacket.getLength());
+                System.out.println("Resposta do servidor: "+data);
+            }
 
             clientSocket.close();
         } catch (SocketException e) {
