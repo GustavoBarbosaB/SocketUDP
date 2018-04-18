@@ -8,14 +8,14 @@ public class FileStorageHelper {
 
     private static final String FILE_NAME = "server_log.txt";
 
-    private static File file;
+    private File file;
     private static FileStorageHelper fileStorageHelper;
 
     private FileStorageHelper() {
         init();
     }
 
-    private static void init() {
+    private void init() {
         file = new File(FILE_NAME);
     }
 
@@ -26,7 +26,7 @@ public class FileStorageHelper {
         return fileStorageHelper;
     }
 
-    public static <T> void saveLogData(List<T> list){
+    public <T> void saveLogData(List<T> list){
         if(list != null) {
             try {
                 FileOutputStream f = new FileOutputStream(file);
@@ -47,7 +47,7 @@ public class FileStorageHelper {
         }
     }
 
-    public static <T> void saveLogData(T item){
+    public <T> void saveLogData(T item){
         if(item != null) {
             try {
                 FileOutputStream f = new FileOutputStream(file);
@@ -66,7 +66,7 @@ public class FileStorageHelper {
         }
     }
 
-    public static <T> List<T> recoverLogData() {
+    public <T> List<T> recoverLogData() {
         List<T> list = new ArrayList<>();
         try {
             FileInputStream f = new FileInputStream(file);

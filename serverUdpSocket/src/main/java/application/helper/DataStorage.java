@@ -43,7 +43,7 @@ public class DataStorage {
     }
 
 
-    private synchronized void addLog(Operacao o){
+    public synchronized void addLog(Operacao o){
         toLog.add(o);
     }
 
@@ -77,5 +77,9 @@ public class DataStorage {
 
     public Queue<Arriving> getArriving() {
         return arriving;
+    }
+
+    public Queue<Operacao> getLog() {
+        return toLog;
     }
 }
