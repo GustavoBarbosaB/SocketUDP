@@ -1,8 +1,9 @@
 package application.model;
 
+import java.io.Serializable;
 import java.math.BigInteger;
 
-public class Operacao {
+public class Operacao implements Serializable {
 
     private BigInteger chave;
     private String valor;
