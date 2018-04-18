@@ -24,6 +24,7 @@ public class ThreadProcess extends Thread {
 
         //Todo fazer a leitura do log
 
+        ThreadLogger.init();
 
         while(true) {
             try {
@@ -34,8 +35,6 @@ public class ThreadProcess extends Thread {
 
                     //add log
                     getInstance().addLog(op);
-                    ThreadLogger.getInstance().start();
-
 
                     System.out.println(op.toString());
                     Thread thread = new ThreadExecute(serverSocket,arriving.getmPort(),op);

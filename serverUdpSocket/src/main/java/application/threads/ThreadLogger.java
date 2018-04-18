@@ -11,11 +11,11 @@ public class ThreadLogger extends Thread {
     private ThreadLogger(){
     }
 
-    public static ThreadLogger getInstance() {
+    static void init() {
         if(threadLogger == null) {
             threadLogger = new ThreadLogger();
+            threadLogger.start();
         }
-        return threadLogger;
     }
 
     @Override
