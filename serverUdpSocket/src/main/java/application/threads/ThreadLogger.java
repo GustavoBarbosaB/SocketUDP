@@ -1,21 +1,29 @@
 package application.threads;
 
+import application.helper.DataStorage;
 import application.helper.FileStorageHelper;
 import application.model.Operacao;
 
-import static application.helper.DataStorage.getInstance;
-
 public class ThreadLogger extends Thread {
 
-    ThreadLogger(){
+    private static ThreadLogger threadLogger;
+
+    private ThreadLogger(){
+    }
+
+    public static ThreadLogger getInstance() {
+        if(threadLogger == null) {
+            threadLogger = new ThreadLogger();
+        }
+        return threadLogger;
     }
 
     @Override
     public void run(){
         while(true) {
-            if(!getInstance().getLog().isEmpty()) {
+            if(!DataStorage.getInstance().getLog().isEmpty()) {
 
-                Operacao op = getInstance().pollLog();
+                Operacao op = DataStorage.getInstance().pollLog();
                 updateLogFile(op);
             }
         }

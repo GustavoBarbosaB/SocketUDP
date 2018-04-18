@@ -33,9 +33,8 @@ public class ThreadProcess extends Thread {
                     Operacao op = SerializeEstado.readOperacao(arriving.getPackage());
 
                     //add log
-                    Thread logThread = new ThreadLogger();
                     getInstance().addLog(op);
-                    logThread.start();
+                    ThreadLogger.getInstance().start();
 
 
                     System.out.println(op.toString());
