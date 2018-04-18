@@ -32,8 +32,6 @@ public class ThreadExecute extends Thread{
                 break;
             }
         }
-
-
     }
 
     private void executeOperation(){
@@ -41,12 +39,16 @@ public class ThreadExecute extends Thread{
         switch (op.getOperacao()){
             case 0://Create
                 getInstance().addExecuted(op.getChave(),op.getValor());
+                //add log
+                getInstance().addLog(op);
                 break;
             case 1://Read
                 try {
                     byte[] resposta = getInstance().getExecuted(op.getChave()).getBytes();
                     DatagramPacket sendPacket = new DatagramPacket(resposta, resposta.length, InetAddress.getByName("localhost"),port);
                     serverSocket.send(sendPacket);
+                    //add log
+                    getInstance().addLog(op);
                 } catch (IOException e) {
                     e.printStackTrace();
                 }
@@ -54,14 +56,43 @@ public class ThreadExecute extends Thread{
 
             case 2://Update
                 getInstance().addExecuted(op.getChave(),op.getValor());
+                //add log
+                getInstance().addLog(op);
                 break;
 
             case 3://Delete
                 getInstance().removeExecuted(op.getChave());
+                //add log
+                getInstance().addLog(op);
                 break;
 
             default:
                 //logger.warning("Comando desconhecido!");
+        }
+    }
+
+    static void executeOperation(Operacao operacao){
+
+        switch (operacao.getOperacao()){
+
+            case 0://Create
+                getInstance().addExecuted(operacao.getChave(),operacao.getValor());
+                break;
+
+            case 1://Read
+                getInstance().getExecuted(operacao.getChave());
+                break;
+
+            case 2://Update
+                getInstance().addExecuted(operacao.getChave(),operacao.getValor());
+                break;
+
+            case 3://Delete
+                getInstance().removeExecuted(operacao.getChave());
+                break;
+
+            default:
+                break;
         }
     }
 
