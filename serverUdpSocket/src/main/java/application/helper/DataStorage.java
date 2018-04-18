@@ -1,5 +1,6 @@
 package application.helper;
 
+import application.model.Arriving;
 import application.model.Operacao;
 
 import java.math.BigInteger;
@@ -8,6 +9,11 @@ import java.util.LinkedList;
 import java.util.Queue;
 
 public class DataStorage {
+
+    private HashMap<BigInteger,String> executed;
+    private Queue<Operacao> toLog;
+    private Queue<Long> toRun;
+    private Queue<Arriving> arriving;
 
     public synchronized String getExecuted(BigInteger chave) {
         return executed.get(chave);
@@ -19,11 +25,6 @@ public class DataStorage {
         else
             this.executed.put(chave,value);
     }
-
-    private HashMap<BigInteger,String> executed;
-    private Queue<Operacao> toLog;
-    private Queue<Operacao> toRun;
-    private Queue<byte[]> arriving;
 
     private static DataStorage dataStorage;
 
@@ -41,37 +42,40 @@ public class DataStorage {
         return dataStorage;
     }
 
-    public synchronized void addOperation(Operacao o){
-        addLog(o);
-        addRun(o);
-    }
 
     private synchronized void addLog(Operacao o){
         toLog.add(o);
     }
 
-    private synchronized void addRun(Operacao o){
-        toRun.add(o);
+    public synchronized Long pollToRun() {
+        return toRun.poll();
+    }
+
+    public synchronized Long getFirstToRun() {
+        return toRun.peek();
+    }
+
+    public synchronized void addToRun(Long pid) {
+        this.toRun.add(pid);
     }
 
     public synchronized Operacao pollLog(){
         return toLog.poll();
     }
 
-    public synchronized void addArriving(byte[] o){
+    public synchronized void addArriving(Arriving o){
         arriving.add(o);
     }
 
-    public synchronized byte[] pollArriving(){
+    public synchronized Arriving pollArriving(){
         return arriving.poll();
     }
 
-    public synchronized Operacao pollRun(){
-        return toRun.poll();
-    }
-
-
     public synchronized void removeExecuted(BigInteger chave) {
         executed.remove(chave);
+    }
+
+    public Queue<Arriving> getArriving() {
+        return arriving;
     }
 }

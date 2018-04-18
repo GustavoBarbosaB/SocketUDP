@@ -3,6 +3,7 @@ package application;
 import application.configuration.ApplicationProperties;
 import application.helper.DataStorage;
 import application.helper.SerializeEstado;
+import application.model.Arriving;
 import application.model.Operacao;
 import application.threads.ThreadProcess;
 
@@ -25,7 +26,6 @@ public class ServerMain {
 
     public static void main(String args[])
     {
-        int i = 0;
         PORT = ApplicationProperties.getInstance().loadProperties().getProperty("server.port");
         IPADDRESS = ApplicationProperties.getInstance().loadProperties().getProperty("server.address");
         logger.info("Porta do server = "+ PORT);
@@ -39,28 +39,22 @@ public class ServerMain {
         }
         DatagramPacket receivePacket = new DatagramPacket(receiveData, receiveData.length);
 
+        Thread thread = new ThreadProcess(serverSocket);
+        thread.start();
+
         while(true) {
             try {
                 serverSocket.receive(receivePacket);
 
                 byte[] result = receivePacket.getData();
 
-                getInstance().addArriving(result);
-
-                Thread thread = new ThreadProcess(receivePacket.getPort(),serverSocket);
-                thread.start();
+                getInstance().addArriving(new Arriving(receivePacket.getPort(),result));
 
 
             } catch (IOException e) {
                 e.printStackTrace();
             }
 
-            /*Teste para aceitar apenas 20 conexões*/
-            i++;
-            if (i == 20) {
-                serverSocket.close();
-                break;
-            }
 
         }
 
