@@ -22,7 +22,7 @@ public class ThreadProcess extends Thread {
 
     @Override
     public void run(){
-/*
+
         ThreadLogger threadLogger = ThreadLogger.init();
         List<Operacao> operacaos = threadLogger.getLogList();
         if(operacaos != null) {
@@ -33,7 +33,7 @@ public class ThreadProcess extends Thread {
                         + " Valor: "+ operacao.getValor();
                 System.out.println(message);
             }
-        }*/
+        }
 
         while(true) {
             try {

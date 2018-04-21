@@ -40,9 +40,7 @@ public class FileStorageHelper {
                 f.close();
 
             } catch (FileNotFoundException e) {
-                System.out.println("File not found");
             } catch (IOException e) {
-                System.out.println("Error initializing stream");
             }
         }
     }
@@ -74,9 +72,7 @@ public class FileStorageHelper {
             o.close();
             f.close();
         } catch (FileNotFoundException e) {
-            System.out.println("File not found");
         } catch (IOException e) {
-            System.out.println("Error initializing stream");
         } catch (ClassNotFoundException e) {
             e.printStackTrace();
         }
