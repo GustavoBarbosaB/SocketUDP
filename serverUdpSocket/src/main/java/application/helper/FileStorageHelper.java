@@ -49,20 +49,9 @@ public class FileStorageHelper {
 
     public <T> void saveLogData(T item){
         if(item != null) {
-            try {
-                FileOutputStream f = new FileOutputStream(file);
-                ObjectOutputStream o = new ObjectOutputStream(f);
-
-                o.writeObject(item);
-
-                o.close();
-                f.close();
-
-            } catch (FileNotFoundException e) {
-                System.out.println("File not found");
-            } catch (IOException e) {
-                System.out.println("Error initializing stream");
-            }
+            List<T> list = recoverLogData();
+            list.add(item);
+            saveLogData(list);
         }
     }
 
