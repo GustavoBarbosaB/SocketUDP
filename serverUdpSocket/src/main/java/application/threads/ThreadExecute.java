@@ -32,43 +32,53 @@ public class ThreadExecute extends Thread{
                 break;
             }
         }
+
+
     }
 
     private void executeOperation(){
 
-        switch (op.getOperacao()){
-            case 0://Create
-                getInstance().addExecuted(op.getChave(),op.getValor());
-                //add log
-                getInstance().addLog(op);
-                break;
-            case 1://Read
-                try {
-                    byte[] resposta = getInstance().getExecuted(op.getChave()).getBytes();
-                    DatagramPacket sendPacket = new DatagramPacket(resposta, resposta.length, InetAddress.getByName("localhost"),port);
-                    serverSocket.send(sendPacket);
-                    //add log
+        DatagramPacket sendPacket;
+        byte[] resposta;
+
+        try {
+            switch (op.getOperacao()) {
+                case 0://Create
+                    resposta = getInstance().addExecuted(op.getChave(), op.getValor()).getBytes();
+                    sendPacket = new DatagramPacket(resposta, resposta.length, InetAddress.getByName("localhost"), port);
                     getInstance().addLog(op);
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
-                break;
+                    break;
+                case 1://Read
+                    resposta = getInstance().getExecuted(op.getChave()).getBytes();
+                    sendPacket = new DatagramPacket(resposta, resposta.length, InetAddress.getByName("localhost"), port);
+                    getInstance().addLog(op);
+                    break;
 
-            case 2://Update
-                getInstance().addExecuted(op.getChave(),op.getValor());
-                //add log
-                getInstance().addLog(op);
-                break;
+                case 2://Update
+                    resposta = getInstance().replaceExecuted(op.getChave(), op.getValor()).getBytes();
+                    sendPacket = new DatagramPacket(resposta, resposta.length, InetAddress.getByName("localhost"), port);
+                    getInstance().addLog(op);
+                    break;
 
-            case 3://Delete
-                getInstance().removeExecuted(op.getChave());
-                //add log
-                getInstance().addLog(op);
-                break;
+                case 3://Delete
+                    getInstance().removeExecuted(op.getChave());
+                    resposta = "Deletado com sucesso!".getBytes();
+                    sendPacket = new DatagramPacket(resposta, resposta.length, InetAddress.getByName("localhost"), port);
+                    getInstance().addLog(op);
+                    break;
 
-            default:
-                //logger.warning("Comando desconhecido!");
+                default:
+                    resposta = "Operação inexistente!".getBytes();
+                    sendPacket = new DatagramPacket(resposta, resposta.length, InetAddress.getByName("localhost"), port);
+
+            }
+            serverSocket.send(sendPacket);
+
+        } catch (IOException e) {
+            e.printStackTrace();
         }
+
+
     }
 
     static void executeOperation(Operacao operacao){

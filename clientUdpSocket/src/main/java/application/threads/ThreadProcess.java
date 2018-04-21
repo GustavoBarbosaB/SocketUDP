@@ -40,17 +40,15 @@ public class ThreadProcess extends Thread{
             clientSocket = new DatagramSocket();
             InetAddress IPAddress = InetAddress.getByName(IPADDRESS);
             DatagramPacket sendPacket = new DatagramPacket(dados, dados.length, IPAddress, Integer.parseInt(port));
-//            System.out.println("enviado: " + dados);
-//            System.out.println("tamanho enviado: " + dados.length);
 
             clientSocket.send(sendPacket);
-            if(opcaoMenu==1) {
-                // MENSAGEM VINDA DO SERVIDOR
-                DatagramPacket receivedPacket = new DatagramPacket(receivedData, receivedData.length);
-                clientSocket.receive(receivedPacket);
-                String data = new String(receivedPacket.getData(), receivedPacket.getOffset(), receivedPacket.getLength());
-                System.out.println("Resposta do servidor: "+data);
-            }
+
+            // MENSAGEM VINDA DO SERVIDOR
+            DatagramPacket receivedPacket = new DatagramPacket(receivedData, receivedData.length);
+            clientSocket.receive(receivedPacket);
+            String data = new String(receivedPacket.getData(), receivedPacket.getOffset(), receivedPacket.getLength());
+            System.out.println("Resposta do servidor: " + data);
+
 
             clientSocket.close();
         } catch (SocketException e) {
