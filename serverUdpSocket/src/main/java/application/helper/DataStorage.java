@@ -19,11 +19,22 @@ public class DataStorage {
         return executed.get(chave);
     }
 
-    public synchronized void addExecuted(BigInteger chave, String value) {
+    public synchronized String addExecuted(BigInteger chave, String value) {
+        if(!executed.containsKey(chave))
+            executed.put(chave,value);
+        else
+            return "Chave existente!";
+
+        return "Inserido com sucesso!";
+    }
+
+    public synchronized String replaceExecuted(BigInteger chave, String value){
         if(executed.containsKey(chave))
             executed.replace(chave,value);
         else
-            this.executed.put(chave,value);
+            return "Chave inexistente!";
+
+        return "Atualizado com sucesso!";
     }
 
     private static DataStorage dataStorage;

@@ -44,8 +44,7 @@ public class ThreadExecute extends Thread{
         try {
             switch (op.getOperacao()) {
                 case 0://Create
-                    getInstance().addExecuted(op.getChave(), op.getValor());
-                    resposta = "Criado com sucesso!".getBytes();
+                    resposta = getInstance().addExecuted(op.getChave(), op.getValor()).getBytes();
                     sendPacket = new DatagramPacket(resposta, resposta.length, InetAddress.getByName("localhost"), port);
                     getInstance().addLog(op);
                     break;
@@ -56,8 +55,7 @@ public class ThreadExecute extends Thread{
                     break;
 
                 case 2://Update
-                    getInstance().addExecuted(op.getChave(), op.getValor());
-                    resposta = "Atualizado com sucesso!".getBytes();
+                    resposta = getInstance().replaceExecuted(op.getChave(), op.getValor()).getBytes();
                     sendPacket = new DatagramPacket(resposta, resposta.length, InetAddress.getByName("localhost"), port);
                     getInstance().addLog(op);
                     break;
