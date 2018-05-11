@@ -21,10 +21,11 @@ public class ThreadProcess extends Thread{
     final private String valor;
     final private Integer opcaoMenu;
 
-    public ThreadProcess(BigInteger chave, String valor, Integer opcaoMenu){
+    public ThreadProcess(BigInteger chave, String valor, Integer opcaoMenu, DatagramSocket socket){
         this.chave = chave;
         this.valor = valor;
         this.opcaoMenu = opcaoMenu;
+        this.clientSocket = socket;
     }
 
     @Override
@@ -33,24 +34,21 @@ public class ThreadProcess extends Thread{
         Operacao operacao = new Operacao(chave, valor, opcaoMenu);
         byte[] dados = operacao.convertData();
 
-        byte[] receivedData = new byte[1480];
-        String resposta = "";
+        //byte[] receivedData = new byte[1480];
+        //String resposta = "";
 
         try {
-            clientSocket = new DatagramSocket();
             InetAddress IPAddress = InetAddress.getByName(IPADDRESS);
             DatagramPacket sendPacket = new DatagramPacket(dados, dados.length, IPAddress, Integer.parseInt(port));
 
             clientSocket.send(sendPacket);
 
             // MENSAGEM VINDA DO SERVIDOR
-            DatagramPacket receivedPacket = new DatagramPacket(receivedData, receivedData.length);
-            clientSocket.receive(receivedPacket);
-            String data = new String(receivedPacket.getData(), receivedPacket.getOffset(), receivedPacket.getLength());
-            System.out.println("Resposta do servidor: " + data);
+            //DatagramPacket receivedPacket = new DatagramPacket(receivedData, receivedData.length);
+            //clientSocket.receive(receivedPacket);
+            //String data = new String(receivedPacket.getData(), receivedPacket.getOffset(), receivedPacket.getLength());
+            //System.out.println("Resposta do servidor: " + data);
 
-
-            clientSocket.close();
         } catch (SocketException e) {
             e.printStackTrace();
         } catch (UnknownHostException e) {

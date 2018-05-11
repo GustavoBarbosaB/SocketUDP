@@ -54,7 +54,7 @@ public class FileStorageHelper {
     }
 
     public <T> List<T> recoverLogData() {
-        List<T> list = new ArrayList<>();
+        List<T> list = new ArrayList<T>();
         try {
             FileInputStream f = new FileInputStream(file);
             ObjectInputStream o = new ObjectInputStream(f);

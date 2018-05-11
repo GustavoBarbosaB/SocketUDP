@@ -4,8 +4,13 @@ import application.configuration.ApplicationProperties;
 import application.model.OpcoesMenu;
 import application.model.Operacao;
 import application.threads.ThreadProcess;
+import application.threads.ThreadResponse;
 
+import java.io.IOException;
 import java.math.BigInteger;
+import java.net.DatagramPacket;
+import java.net.DatagramSocket;
+import java.net.SocketException;
 import java.util.Scanner;
 import java.util.logging.Logger;
 
@@ -15,9 +20,15 @@ public class ClientMain {
             loadProperties().getProperty("server.port");
     private static Logger logger = Logger.getLogger(Logger.GLOBAL_LOGGER_NAME);
     private static String IPADDRESS = "localhost";
+    private static DatagramSocket clientSocket = null;
 
 
-    public static void main(String args[]) {
+
+
+
+
+    public static void main(String args[]) throws IOException {
+        clientSocket = new DatagramSocket();
         Operacao operacao;
 
         Scanner scanner = new Scanner(System.in);
@@ -26,6 +37,11 @@ public class ClientMain {
         Integer opcaoMenu = 4;
         BigInteger chave;
         String valor = null;
+        //----------------------------------
+
+        //------- THREAD PARA RECEBER ALERTAS DO MONITORAMENTO
+        Thread threadResponse = new ThreadResponse(clientSocket);
+        threadResponse.start();
         //----------------------------------
         while (true) {
             //------- MENU
@@ -45,8 +61,10 @@ public class ClientMain {
             }
             //----------------------------------
 
+
+
             //------- CRIACAO DE THREADS
-            Thread t = new ThreadProcess(chave, valor, opcaoMenu);
+            Thread t = new ThreadProcess(chave, valor, opcaoMenu, clientSocket);
             t.start();
             //----------------------------------
         }
@@ -61,7 +79,7 @@ public class ClientMain {
             }
             System.out.println("Opção:");
             opcao = scanner.nextInt();
-        }while ((opcao > 3 || opcao < 0) && opcao != 10);
+        }while ((opcao > 5 || opcao < 0) && opcao != 10);
         return opcao;
     }
 

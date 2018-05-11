@@ -4,9 +4,11 @@ import application.helper.DataStorage;
 import application.model.Operacao;
 
 import java.io.IOException;
+import java.lang.reflect.Array;
 import java.net.DatagramPacket;
 import java.net.DatagramSocket;
 import java.net.InetAddress;
+import java.util.ArrayList;
 
 import static application.helper.DataStorage.getInstance;
 
@@ -56,6 +58,15 @@ public class ThreadExecute extends Thread{
 
                 case 2://Update
                     resposta = getInstance().replaceExecuted(op.getChave(), op.getValor()).getBytes();
+                    ArrayList<Integer> clientesRegistrados = getInstance().getRegisterHash((op.getChave()));
+                    if (clientesRegistrados != null){
+                        for(Integer i = 0; i < clientesRegistrados.size(); i++){
+                            byte[] respostaRegistro = ("**O valor da chave " + op.getChave() + " foi alterado para: "+ op.getValor()).getBytes();
+                            Integer portaCliente = clientesRegistrados.get(i);
+                            sendPacket = new DatagramPacket(respostaRegistro, respostaRegistro.length, InetAddress.getByName("localhost"), portaCliente);
+                            serverSocket.send(sendPacket);
+                        }
+                    }
                     sendPacket = new DatagramPacket(resposta, resposta.length, InetAddress.getByName("localhost"), port);
                     getInstance().addLog(op);
                     break;
@@ -63,6 +74,12 @@ public class ThreadExecute extends Thread{
                 case 3://Delete
                     getInstance().removeExecuted(op.getChave());
                     resposta = "Deletado com sucesso!".getBytes();
+                    sendPacket = new DatagramPacket(resposta, resposta.length, InetAddress.getByName("localhost"), port);
+                    getInstance().addLog(op);
+                    break;
+
+                case 4://Register
+                    resposta = getInstance().addRegisterHash(op.getChave(), port).getBytes();
                     sendPacket = new DatagramPacket(resposta, resposta.length, InetAddress.getByName("localhost"), port);
                     getInstance().addLog(op);
                     break;

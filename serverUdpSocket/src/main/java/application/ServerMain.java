@@ -39,8 +39,8 @@ public class ServerMain {
         }
         DatagramPacket receivePacket = new DatagramPacket(receiveData, receiveData.length);
 
-        Thread thread = new ThreadProcess(serverSocket);
-        thread.start();
+        Thread threadProcess = new ThreadProcess(serverSocket);
+        threadProcess.start();
 
         while(true) {
             try {

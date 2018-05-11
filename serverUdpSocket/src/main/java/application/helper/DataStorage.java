@@ -4,13 +4,11 @@ import application.model.Arriving;
 import application.model.Operacao;
 
 import java.math.BigInteger;
-import java.util.HashMap;
-import java.util.LinkedList;
-import java.util.Queue;
+import java.util.*;
 
 public class DataStorage {
-
     private HashMap<BigInteger,String> executed;
+    private HashMap<BigInteger,ArrayList<Integer>> registerHash;
     private Queue<Operacao> toLog;
     private Queue<Long> toRun;
     private Queue<Arriving> arriving;
@@ -40,10 +38,11 @@ public class DataStorage {
     private static DataStorage dataStorage;
 
     private DataStorage(){
-        executed = new HashMap<>();
-        toLog = new LinkedList<>();
-        toRun =  new LinkedList<>();
-        arriving = new LinkedList<>();
+        executed = new HashMap<BigInteger,String>();
+        toLog = new LinkedList<Operacao>();
+        toRun =  new LinkedList<Long>();
+        arriving = new LinkedList<Arriving>();
+        registerHash = new HashMap<BigInteger, ArrayList<Integer>>();
     }
 
     public synchronized static DataStorage getInstance(){
@@ -53,6 +52,33 @@ public class DataStorage {
         return dataStorage;
     }
 
+    public synchronized String addRegisterHash(BigInteger chave, Integer port){
+        ArrayList<Integer> listaClientes;
+        if(!executed.containsKey(chave))
+            return "Chave ainda não criada";
+
+        if(!registerHash.containsKey(chave)){
+            listaClientes = new ArrayList<Integer>();
+            listaClientes.add(port);
+            registerHash.put(chave,listaClientes);
+        }
+        else{
+            listaClientes = registerHash.get(chave);
+            listaClientes.add(port);
+            registerHash.put(chave, listaClientes);
+        }
+        return "Registrado com sucesso!";
+    }
+
+    public synchronized ArrayList<Integer> getRegisterHash(BigInteger chave){
+        ArrayList<Integer> listaClientes;
+        if(!registerHash.containsKey(chave)){
+            return null;
+        }
+        else{
+            return registerHash.get(chave);
+        }
+    }
 
     public synchronized void addLog(Operacao o){
         toLog.add(o);
