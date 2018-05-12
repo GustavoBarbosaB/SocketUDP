@@ -8,6 +8,7 @@ import org.socketUdp.grpc.MakeOperationGrpc;
 import org.socketUdp.grpc.Operation;
 import org.socketUdp.grpc.OperationResponse;
 
+import java.io.UnsupportedEncodingException;
 import java.math.BigInteger;
 import java.util.Scanner;
 import java.util.concurrent.TimeUnit;
@@ -31,10 +32,21 @@ public class ClientGrpc {
         channel.shutdown().awaitTermination(5, TimeUnit.SECONDS);
     }
 
-    public void makeOperation(int op, Integer chave, String valor) {
+    public void makeOperation(int op, Integer chave, String valor) throws UnsupportedEncodingException {
+        BigInteger chaveNova;
+
+        try{
+            chaveNova = BigInteger.valueOf(chave.intValue());
+        }catch (Exception ex){
+            System.out.println(ex.getMessage());
+            return;
+        }
+        
         Operation operation = Operation.newBuilder()
                 .setOp(op)
+                .setTamChave(chaveNova.toByteArray().length)
                 .setChave(chave)
+                .setTamValor(valor.getBytes("UTF-16").length-2)
                 .setValor(valor)
                 .build();
         OperationResponse response;
@@ -48,8 +60,8 @@ public class ClientGrpc {
     }
 
 
-    public static void main(String[] args) throws InterruptedException {
-        ClientGrpc client = new ClientGrpc("localhost", 5959);
+    public static void main(String[] args) throws InterruptedException, UnsupportedEncodingException {
+        ClientGrpc client = new ClientGrpc("localhost", 8090);
         Scanner scanner = new Scanner(System.in);
 
         Integer opcaoMenu = 4;
@@ -92,7 +104,7 @@ public class ClientGrpc {
             }
             System.out.println("Opção:");
             opcao = scanner.nextInt();
-        }while ((opcao > 3 || opcao < 0) && opcao != 10);
+        }while ((opcao > 5 || opcao < 0) && opcao != 10);
         return opcao;
     }
 
