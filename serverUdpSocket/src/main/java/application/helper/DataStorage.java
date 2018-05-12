@@ -70,6 +70,8 @@ public class DataStorage {
         return "Registrado com sucesso!";
     }
 
+
+
     public synchronized ArrayList<Integer> getRegisterHash(BigInteger chave){
         ArrayList<Integer> listaClientes;
         if(!registerHash.containsKey(chave)){
@@ -79,6 +81,8 @@ public class DataStorage {
             return registerHash.get(chave);
         }
     }
+
+    public synchronized void removeRegisterHash(BigInteger chave){ registerHash.remove(chave); }
 
     public synchronized void addLog(Operacao o){
         toLog.add(o);

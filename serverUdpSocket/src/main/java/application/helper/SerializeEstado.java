@@ -32,6 +32,7 @@ public class SerializeEstado {
         return new Operacao(chave,valor,op);
     }
 
+
     public static String readString(byte[] b) throws IOException {
             return new String(b,"UTF-16");
     }

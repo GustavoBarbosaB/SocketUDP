@@ -1,30 +1,55 @@
 package application;
 
+import application.model.Operacao;
 import io.grpc.stub.StreamObserver;
 import org.socketUdp.grpc.MakeOperationGrpc;
 import org.socketUdp.grpc.Operation;
 import org.socketUdp.grpc.OperationResponse;
 
+import java.io.IOException;
+import java.math.BigInteger;
+
+import static application.helper.DataStorage.getInstance;
+
 public class GrpcSocketImp extends MakeOperationGrpc.MakeOperationImplBase {
     @Override
     public void makeOperation(
-            Operation request, StreamObserver<OperationResponse> responseObserver) {
+        Operation request, StreamObserver<OperationResponse> responseObserver) {
 
-        String responseString = new StringBuilder()
-                .append("Operacao: ")
-                .append(request.getOp())
-                .append("/ Chave: ")
-                .append(request.getChave())
-                .append("/ Valor: ")
-                .append(request.getValor())
-                .toString();
+        BigInteger chaveNova;
+        Integer chave = request.getChave();
+        try{
+            chaveNova = BigInteger.valueOf(chave.intValue());
+        }catch (Exception ex){
+            System.out.println(ex.getMessage());
+            return;
+        }
 
-        OperationResponse response = OperationResponse.newBuilder()
-                .setResponse(responseString)
-                .setValor("ATE O MOMENTO NADA")
-                .build();
+            Operacao op = new Operacao();
+            op.setChave(chaveNova);
+            op.setOperacao(request.getOp());
+            op.setValor(request.getValor());
 
-        responseObserver.onNext(response);
-        responseObserver.onCompleted();
+            OperationResponse response = OperationResponse.newBuilder()
+                    .setResponse("MENSAGEM VINDA DO SERVIDOR//")
+                    .setValor("ATE O MOMENTO NADA")
+                    .build();
+
+            responseObserver.onNext(response);
+            try {
+                sendToQueue(op.convertData());
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+            responseObserver.onCompleted();
     }
+
+    public void sendToQueue(byte[] dados) throws IOException {
+
+
+
+    }
+
+
+
 }

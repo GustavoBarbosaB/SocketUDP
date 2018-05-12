@@ -17,6 +17,7 @@ public class ThreadExecute extends Thread{
     private Integer port;
     private DatagramSocket serverSocket;
     private Operacao op;
+    private ArrayList<Integer> clientesRegistrados;
 
     public ThreadExecute(DatagramSocket serverSocket, Integer port,Operacao op) {
         this.port=port;
@@ -58,7 +59,7 @@ public class ThreadExecute extends Thread{
 
                 case 2://Update
                     resposta = getInstance().replaceExecuted(op.getChave(), op.getValor()).getBytes();
-                    ArrayList<Integer> clientesRegistrados = getInstance().getRegisterHash((op.getChave()));
+                    clientesRegistrados = getInstance().getRegisterHash((op.getChave()));
                     if (clientesRegistrados != null){
                         for(Integer i = 0; i < clientesRegistrados.size(); i++){
                             byte[] respostaRegistro = ("**O valor da chave " + op.getChave() + " foi alterado para: "+ op.getValor()).getBytes();
@@ -72,6 +73,16 @@ public class ThreadExecute extends Thread{
                     break;
 
                 case 3://Delete
+                    clientesRegistrados = getInstance().getRegisterHash((op.getChave()));
+                    if (clientesRegistrados != null){
+                        for(Integer i = 0; i < clientesRegistrados.size(); i++){
+                            byte[] respostaRegistro = ("**A chave " + op.getChave() + " foi removida").getBytes();
+                            Integer portaCliente = clientesRegistrados.get(i);
+                            sendPacket = new DatagramPacket(respostaRegistro, respostaRegistro.length, InetAddress.getByName("localhost"), portaCliente);
+                            serverSocket.send(sendPacket);
+                        }
+                    }
+                    getInstance().removeRegisterHash((op.getChave()));
                     getInstance().removeExecuted(op.getChave());
                     resposta = "Deletado com sucesso!".getBytes();
                     sendPacket = new DatagramPacket(resposta, resposta.length, InetAddress.getByName("localhost"), port);

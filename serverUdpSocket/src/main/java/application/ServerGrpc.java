@@ -1,17 +1,24 @@
 package application;
 
+import application.configuration.ApplicationProperties;
 import io.grpc.Server;
 import io.grpc.netty.NettyServerBuilder;
 
 import java.io.IOException;
+import java.util.logging.Logger;
 
 public class ServerGrpc {
     private Server server;
+    private static String PORT;
+    private static String IPADDRESS;
+    private static Logger logger = Logger.getLogger(Logger.GLOBAL_LOGGER_NAME);
 
     private void start(){
         try {
+            PORT = ApplicationProperties.getInstance().loadProperties().getProperty("servergrpc.port");
+            IPADDRESS = ApplicationProperties.getInstance().loadProperties().getProperty("server.address");
             server = NettyServerBuilder
-                    .forPort(5959)
+                    .forPort(Integer.parseInt(PORT))
                     .addService(new GrpcSocketImp())
                     .build()
                     .start();
@@ -43,6 +50,7 @@ public class ServerGrpc {
     public static void main(String[] args) throws IOException, InterruptedException {
         final ServerGrpc server = new ServerGrpc();
         server.start();
+        logger.info("Porta do server = "+ PORT);
         server.blockUntilShutdown();
     }
 }
