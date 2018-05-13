@@ -1,12 +1,8 @@
 package application;
 
-import application.threads.ThreadProcess;
-
-import java.io.IOException;
-
 public class MainMain {
 
-    public static void main(String[] args) throws IOException, InterruptedException {
+    public static void main(String[] args) {
         Thread threadMainServer = new ThreadServerMain();
         threadMainServer.start();
         Thread threadMainGrpc = new ThreadServerGrpc();

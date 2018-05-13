@@ -2,113 +2,138 @@ package application.helper;
 
 import application.model.Arriving;
 import application.model.Operacao;
+import io.grpc.stub.StreamObserver;
+import org.socketUdp.grpc.OperationResponse;
 
 import java.math.BigInteger;
 import java.util.*;
+import java.util.concurrent.BlockingQueue;
+import java.util.concurrent.ConcurrentHashMap;
+import java.util.concurrent.LinkedBlockingDeque;
 
 public class DataStorage {
-    private HashMap<BigInteger,String> executed;
-    private HashMap<BigInteger,ArrayList<Integer>> registerHash;
-    private Queue<Operacao> toLog;
-    private Queue<Long> toRun;
-    private Queue<Arriving> arriving;
 
-    public synchronized String getExecuted(BigInteger chave) {
-        return executed.get(chave);
-    }
-
-    public synchronized String addExecuted(BigInteger chave, String value) {
-        if(!executed.containsKey(chave))
-            executed.put(chave,value);
-        else
-            return "Chave existente!";
-
-        return "Inserido com sucesso!";
-    }
-
-    public synchronized String replaceExecuted(BigInteger chave, String value){
-        if(executed.containsKey(chave))
-            executed.replace(chave,value);
-        else
-            return "Chave inexistente!";
-
-        return "Atualizado com sucesso!";
-    }
+    private ConcurrentHashMap<BigInteger, String> executed;
+    private ConcurrentHashMap<BigInteger, ArrayList<StreamObserver<OperationResponse>>> registerHashGrpc;
+    private ConcurrentHashMap<BigInteger, ArrayList<Integer>> registerHashSocket;
+    private BlockingQueue<Operacao> toLog;
+    private BlockingQueue<Arriving> arriving;
 
     private static DataStorage dataStorage;
 
-    private DataStorage(){
-        executed = new HashMap<BigInteger,String>();
-        toLog = new LinkedList<Operacao>();
-        toRun =  new LinkedList<Long>();
-        arriving = new LinkedList<Arriving>();
-        registerHash = new HashMap<BigInteger, ArrayList<Integer>>();
+    private DataStorage() {
+        executed = new ConcurrentHashMap<BigInteger, String>();
+        toLog = new LinkedBlockingDeque<Operacao>();
+        arriving = new LinkedBlockingDeque<Arriving>();
+        registerHashGrpc = new ConcurrentHashMap<BigInteger, ArrayList<StreamObserver<OperationResponse>>>();
+        registerHashSocket = new ConcurrentHashMap<BigInteger, ArrayList<Integer>>();
+
     }
 
-    public synchronized static DataStorage getInstance(){
-        if(dataStorage==null)
+    public synchronized static DataStorage getInstance() {
+        if (dataStorage == null)
             dataStorage = new DataStorage();
 
         return dataStorage;
     }
 
-    public synchronized String addRegisterHash(BigInteger chave, Integer port){
+    public synchronized String getExecuted(BigInteger chave) {
+        if(executed.containsKey(chave))
+            return executed.get(chave);
+
+        return "Chave inexistente!";
+    }
+
+    public synchronized String addExecuted(BigInteger chave, String value) {
+        if (!executed.containsKey(chave)) {
+            executed.put(chave, value);
+            return "Inserido com sucesso!";
+        }
+
+        return "Chave existente!";
+    }
+
+    public synchronized String replaceExecuted(BigInteger chave, String value) {
+        if (executed.containsKey(chave)) {
+            executed.replace(chave, value);
+            return "Atualizado com sucesso!";
+        }
+
+        return "Chave inexistente!";
+
+    }
+
+    public synchronized String addRegisterHashSocket(BigInteger chave, Integer port){
         ArrayList<Integer> listaClientes;
         if(!executed.containsKey(chave))
             return "Chave ainda não criada";
 
-        if(!registerHash.containsKey(chave)){
+        if(!registerHashSocket.containsKey(chave)){
             listaClientes = new ArrayList<Integer>();
             listaClientes.add(port);
-            registerHash.put(chave,listaClientes);
-        }
-        else{
-            listaClientes = registerHash.get(chave);
+            registerHashSocket.put(chave,listaClientes);
+        }else{
+            listaClientes = registerHashSocket.get(chave);
             listaClientes.add(port);
-            registerHash.put(chave, listaClientes);
+            registerHashSocket.put(chave, listaClientes);
         }
         return "Registrado com sucesso!";
     }
 
 
 
-    public synchronized ArrayList<Integer> getRegisterHash(BigInteger chave){
+    public synchronized ArrayList<Integer> getRegisterHashSocket(BigInteger chave){
         ArrayList<Integer> listaClientes;
-        if(!registerHash.containsKey(chave)){
+        if(!registerHashSocket.containsKey(chave)){
             return null;
         }
         else{
-            return registerHash.get(chave);
+            return registerHashSocket.get(chave);
         }
     }
 
-    public synchronized void removeRegisterHash(BigInteger chave){ registerHash.remove(chave); }
+    public synchronized String addRegisterHash(BigInteger chave, StreamObserver<OperationResponse> ouvinte) {
+        ArrayList<StreamObserver<OperationResponse>> listaClientes;
+        if (!executed.containsKey(chave))
+            return "Chave ainda não existente";
 
-    public synchronized void addLog(Operacao o){
+        if (!registerHashGrpc.containsKey(chave)) {
+            registerHashGrpc.put(chave, new ArrayList<StreamObserver<OperationResponse>>(Collections.singleton(ouvinte)));
+        } else {
+            listaClientes = registerHashGrpc.get(chave);
+            listaClientes.add(ouvinte);
+            registerHashGrpc. put(chave, listaClientes);
+        }
+        return "Registrado com sucesso!";
+    }
+
+
+    public synchronized ArrayList<StreamObserver<OperationResponse>> getRegisterHashGrpc(BigInteger chave) {
+        return registerHashGrpc.get(chave);
+    }
+
+    public synchronized void removeRegisterHashGrpc(BigInteger chave) {
+        registerHashGrpc.remove(chave);
+    }
+
+    public synchronized void removeRegisterHashSocket(BigInteger chave) {
+        registerHashGrpc.remove(chave);
+    }
+
+    public synchronized void addLog(Operacao o) {
         toLog.add(o);
     }
 
-    public synchronized Long pollToRun() {
-        return toRun.poll();
-    }
 
-    public synchronized Long getFirstToRun() {
-        return toRun.peek();
-    }
-
-    public synchronized void addToRun(Long pid) {
-        this.toRun.add(pid);
-    }
-
-    public synchronized Operacao pollLog(){
+    public synchronized Operacao pollLog() {
         return toLog.poll();
     }
 
-    public synchronized void addArriving(Arriving o){
+    public synchronized void addArriving(Arriving o) {
         arriving.add(o);
     }
 
-    public synchronized Arriving pollArriving(){
+    public synchronized Arriving pollArriving() {
         return arriving.poll();
     }
 

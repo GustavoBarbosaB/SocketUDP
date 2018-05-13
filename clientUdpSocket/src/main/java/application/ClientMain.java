@@ -2,15 +2,12 @@ package application;
 
 import application.configuration.ApplicationProperties;
 import application.model.OpcoesMenu;
-import application.model.Operacao;
 import application.threads.ThreadProcess;
 import application.threads.ThreadResponse;
 
 import java.io.IOException;
 import java.math.BigInteger;
-import java.net.DatagramPacket;
 import java.net.DatagramSocket;
-import java.net.SocketException;
 import java.util.Scanner;
 import java.util.logging.Logger;
 
@@ -29,7 +26,7 @@ public class ClientMain {
 
     public static void main(String args[]) throws IOException {
         clientSocket = new DatagramSocket();
-        Operacao operacao;
+        application.factory.Operacao operacao;
 
         Scanner scanner = new Scanner(System.in);
 

@@ -10,5 +10,9 @@
         <module name="serverUdpSocket" />
       </profile>
     </annotationProcessing>
+    <bytecodeTargetLevel>
+      <module name="clientUdpSocket" target="6" />
+      <module name="serverUdpSocket" target="6" />
+    </bytecodeTargetLevel>
   </component>
 </project>
