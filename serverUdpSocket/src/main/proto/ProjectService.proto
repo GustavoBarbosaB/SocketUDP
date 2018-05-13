@@ -1,0 +1,20 @@
+syntax = "proto3";
+option java_multiple_files = true;
+package org.socketUdp.grpc;
+
+message Operation {
+    int32 op = 1;
+    int32 tamChave = 2;
+    int32 chave = 3;
+    int32 tamValor = 4;
+    string valor = 5;
+}
+
+message OperationResponse {
+    string response = 1;
+    string valor = 2;
+}
+
+service MakeOperation {
+    rpc makeOperation(Operation) returns (OperationResponse);
+}
