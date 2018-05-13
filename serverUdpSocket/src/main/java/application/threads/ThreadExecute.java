@@ -53,6 +53,8 @@ public class ThreadExecute extends Thread{
                     break;
                 case 1://Read
                     resposta = getInstance().getExecuted(op.getChave()).getBytes();
+                    if(resposta == null) resposta = "Chave inexistente".getBytes();
+                    //TODO quando vc pesquisa uma chave que nao existe ta retornando erro "Exception in thread "Thread-3" java.lang.NullPointerException"
                     sendPacket = new DatagramPacket(resposta, resposta.length, InetAddress.getByName("localhost"), port);
                     getInstance().addLog(op);
                     break;

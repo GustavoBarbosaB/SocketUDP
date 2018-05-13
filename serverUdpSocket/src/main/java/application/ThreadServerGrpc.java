@@ -7,13 +7,13 @@ import io.grpc.netty.NettyServerBuilder;
 import java.io.IOException;
 import java.util.logging.Logger;
 
-public class ServerGrpc {
+public class ThreadServerGrpc extends Thread{
     private Server server;
     private static String PORT;
     private static String IPADDRESS;
     private static Logger logger = Logger.getLogger(Logger.GLOBAL_LOGGER_NAME);
 
-    private void start(){
+    public void starter(){
         try {
             PORT = ApplicationProperties.getInstance().loadProperties().getProperty("servergrpc.port");
             IPADDRESS = ApplicationProperties.getInstance().loadProperties().getProperty("server.address");
@@ -27,7 +27,7 @@ public class ServerGrpc {
                 public void run() {
                     // Use stderr here since the logger may have been reset by its JVM shutdown hook.
                     System.err.println("*** shutting down gRPC server since JVM is shutting down");
-                    ServerGrpc.this.stop();
+                    ThreadServerGrpc.this.stoper();
                     System.err.println("*** server shut down");
                 }
             });
@@ -35,7 +35,7 @@ public class ServerGrpc {
             System.out.println(ex.getMessage());
         }
     }
-    private void stop() {
+    public void stoper() {
         if (server != null) {
             server.shutdown();
         }
@@ -46,11 +46,15 @@ public class ServerGrpc {
         }
     }
 
-
-    public static void main(String[] args) throws IOException, InterruptedException {
-        final ServerGrpc server = new ServerGrpc();
-        server.start();
+    @Override
+    public void run(){
+        final ThreadServerGrpc server = new ThreadServerGrpc();
+        server.starter();
         logger.info("Porta do server = "+ PORT);
-        server.blockUntilShutdown();
+        try {
+            server.blockUntilShutdown();
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
     }
 }

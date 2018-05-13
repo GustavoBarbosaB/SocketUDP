@@ -18,13 +18,14 @@ import java.util.logging.Logger;
 import static application.helper.DataStorage.*;
 import static application.helper.SerializeEstado.*;
 
-public class ServerMain {
+public class ThreadServerMain extends Thread{
 
     private static String PORT;
     private static String IPADDRESS;
     private static Logger logger = Logger.getLogger(Logger.GLOBAL_LOGGER_NAME);
 
-    public static void main(String args[])
+    @Override
+    public void run()
     {
         PORT = ApplicationProperties.getInstance().loadProperties().getProperty("server.port");
         IPADDRESS = ApplicationProperties.getInstance().loadProperties().getProperty("server.address");
