@@ -35,6 +35,7 @@ public class DataStorage {
 
     public synchronized static DataStorage getInstance() {
         if (dataStorage == null)
+        if (dataStorage == null)
             dataStorage = new DataStorage();
 
         return dataStorage;
@@ -155,7 +156,6 @@ public class DataStorage {
     public synchronized void removeExecuted(BigInteger chave) {
         executed.remove(chave);
     }
-
 
 
     public Queue<Operacao> getLog() {
