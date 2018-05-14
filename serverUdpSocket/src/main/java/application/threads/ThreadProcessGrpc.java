@@ -1,18 +1,14 @@
 package application.threads;
 
-import application.helper.SerializeEstado;
+import application.helper.ExecuteHelper;
 import application.model.ArrivingGrpc;
-import application.model.ArrivingSocket;
 import application.model.Operacao;
 import io.grpc.stub.StreamObserver;
 import org.socketUdp.grpc.Operation;
 import org.socketUdp.grpc.OperationResponse;
 
-import java.io.IOException;
+import java.io.UnsupportedEncodingException;
 import java.math.BigInteger;
-import java.net.DatagramPacket;
-import java.net.InetAddress;
-import java.net.UnknownHostException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Logger;
@@ -53,9 +49,12 @@ public class ThreadProcessGrpc extends Thread {
 
                 System.out.println(op.toString());
 
-                ThreadExecute threadExecute = new ThreadExecute(op, arrivingGrpc.getResponseGrpc(), null);
-
-                threadExecute.start();
+                try {
+                    String response = ExecuteHelper.executeOperation(op, arrivingGrpc.getResponseGrpc());
+                    ExecuteHelper.respondClientGrpc(arrivingGrpc.getResponseGrpc(), response);
+                } catch (UnsupportedEncodingException e) {
+                    e.printStackTrace();
+                }
 
             }
         }

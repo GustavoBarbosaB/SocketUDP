@@ -1,40 +1,15 @@
-package application.threads;
+package application.helper;
 
-import application.helper.DataStorage;
 import application.model.Operacao;
 import io.grpc.stub.StreamObserver;
 import org.socketUdp.grpc.OperationResponse;
 
 import java.io.UnsupportedEncodingException;
 
-public class ThreadExecute extends Thread {
+public class ExecuteHelper extends Thread {
 
-    private Operacao op;
-    private String resposta;
-    private StreamObserver<OperationResponse> responseGrpc;
-    private Integer port;
-
-    public ThreadExecute(Operacao op, StreamObserver<OperationResponse> responseGrpc, Integer port) {
-        this.op = op;
-        this.responseGrpc = responseGrpc;
-        this.port = port;
-    }
-
-    @Override
-    public void run() {
-        try {
-            resposta = executeOperation();
-        } catch (UnsupportedEncodingException e) {
-            e.printStackTrace();
-        }
-
-        if(op.isGrpc())
-            respondClientGrpc(resposta);
-        //else
-            //respondClientSocket(resposta);
-    }
-
-    private String executeOperation() throws UnsupportedEncodingException {
+    public static String executeOperation(Operacao op, StreamObserver<OperationResponse> responseGrpct)
+            throws UnsupportedEncodingException {
 
         byte[] resposta;
 
@@ -66,7 +41,7 @@ public class ThreadExecute extends Thread {
         return str;
     }
 
-    public void respondClientGrpc(String resposta){
+    public static void respondClientGrpc(StreamObserver<OperationResponse> responseGrpc, String resposta){
         OperationResponse response = OperationResponse.newBuilder()
                 .setResponse(resposta)
                 .setValor("//E ESSE CAMPO ??//")
