@@ -1,6 +1,8 @@
 package application;
 
+import application.model.ArrivingGrpc;
 import application.model.Operacao;
+import application.threads.ThreadProcessGrpc;
 import io.grpc.stub.StreamObserver;
 import io.grpc.stub.StreamObservers;
 import org.socketUdp.grpc.MakeOperationGrpc;
@@ -18,35 +20,11 @@ public class GrpcSocketImp extends MakeOperationGrpc.MakeOperationImplBase {
     @Override
     public void makeOperation(Operation request, StreamObserver<OperationResponse> responseObserver) {
 
-        String resposta;
+        getInstance().addArrivingGrpc(new ArrivingGrpc(request, responseObserver));
+        ThreadProcessGrpc threadProcessGrpc = new ThreadProcessGrpc();
+        threadProcessGrpc.start();
 
-        BigInteger chaveNova;
-        Integer chave = request.getChave();
-        try {
-            chaveNova = BigInteger.valueOf(chave.intValue());
-        } catch (Exception ex) {
-            System.out.println(ex.getMessage());
-            return;
-        }
 
-        Operacao op = new Operacao();
-        op.setChave(chaveNova);
-        op.setOperacao(request.getOp());
-        op.setValor(request.getValor());
-        op.setGrpc(true);
-
-        try {
-            resposta = execute(op);
-            OperationResponse response = OperationResponse.newBuilder()
-                    .setResponse(resposta)
-                    //.setValor("//E ESSE CAMPO ??//")
-                    .build();
-
-            responseObserver.onNext(response);
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-        responseObserver.onCompleted();
     }
 
     public String execute(Operacao op) throws IOException {

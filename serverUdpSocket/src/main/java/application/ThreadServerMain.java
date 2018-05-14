@@ -1,22 +1,16 @@
 package application;
 
 import application.configuration.ApplicationProperties;
-import application.helper.DataStorage;
-import application.helper.SerializeEstado;
-import application.model.Arriving;
-import application.model.Operacao;
-import application.threads.ThreadProcess;
+import application.model.ArrivingSocket;
+import application.threads.ThreadProcessSocket;
 
 import java.io.IOException;
-import java.io.Serializable;
 import java.net.DatagramPacket;
 import java.net.DatagramSocket;
-import java.net.InetAddress;
 import java.net.SocketException;
 import java.util.logging.Logger;
 
 import static application.helper.DataStorage.*;
-import static application.helper.SerializeEstado.*;
 
 public class ThreadServerMain extends Thread{
 
@@ -40,7 +34,7 @@ public class ThreadServerMain extends Thread{
         }
         DatagramPacket receivePacket = new DatagramPacket(receiveData, receiveData.length);
 
-        Thread threadProcess = new ThreadProcess(serverSocket);
+        Thread threadProcess = new ThreadProcessSocket(serverSocket);
         threadProcess.start();
 
         while(true) {
@@ -49,7 +43,7 @@ public class ThreadServerMain extends Thread{
 
                 byte[] result = receivePacket.getData();
 
-                getInstance().addArriving(new Arriving(receivePacket.getPort(),result));
+                getInstance().addArrivingSocket(new ArrivingSocket(receivePacket.getPort(),result));
 
 
             } catch (IOException e) {

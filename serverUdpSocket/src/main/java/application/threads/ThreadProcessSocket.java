@@ -1,7 +1,7 @@
 package application.threads;
 
 import application.helper.SerializeEstado;
-import application.model.Arriving;
+import application.model.ArrivingSocket;
 import application.model.Operacao;
 import io.grpc.stub.StreamObserver;
 import org.socketUdp.grpc.OperationResponse;
@@ -14,14 +14,14 @@ import java.util.logging.Logger;
 
 import static application.helper.DataStorage.getInstance;
 
-public class ThreadProcess extends Thread {
+public class ThreadProcessSocket extends Thread {
 
     private DatagramSocket serverSocket;
     private ArrayList<Integer> clientesRegistradosSocket;
     private ArrayList<StreamObserver<OperationResponse>> clientesRegistradosGrpc;
     private static Logger logger = Logger.getLogger(Logger.GLOBAL_LOGGER_NAME);
 
-    public ThreadProcess(DatagramSocket serverSocket) {
+    public ThreadProcessSocket(DatagramSocket serverSocket) {
         this.serverSocket = serverSocket;
     }
 
@@ -42,14 +42,14 @@ public class ThreadProcess extends Thread {
 
         while (true) {
             try {
-                if (!getInstance().getArriving().isEmpty()) {
+                if (!getInstance().getArrivingSocket().isEmpty()) {
 
-                    Arriving arriving = getInstance().pollArriving();
-                    Operacao op = SerializeEstado.readOperacao(arriving.getPackage());
+                    ArrivingSocket arrivingSocket = getInstance().pollArrivingSocket();
+                    Operacao op = SerializeEstado.readOperacao(arrivingSocket.getPackage());
                     op.setGrpc(false);
 
                     System.out.println(op.toString());
-                    executeOperation(op, arriving.getmPort());
+                    executeOperation(op, arrivingSocket.getmPort());
 
                 }
             } catch (UnknownHostException e) {

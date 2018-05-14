@@ -3,6 +3,7 @@ package application;
 import application.configuration.ApplicationProperties;
 import application.model.OpcoesMenu;
 import application.threads.ThreadProcess;
+import application.threads.ThreadProcessSocket;
 import application.threads.ThreadResponse;
 
 import java.io.IOException;

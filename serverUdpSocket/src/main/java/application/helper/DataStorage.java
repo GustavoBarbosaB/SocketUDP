@@ -1,6 +1,7 @@
 package application.helper;
 
-import application.model.Arriving;
+import application.model.ArrivingGrpc;
+import application.model.ArrivingSocket;
 import application.model.Operacao;
 import io.grpc.stub.StreamObserver;
 import org.socketUdp.grpc.OperationResponse;
@@ -17,14 +18,16 @@ public class DataStorage {
     private ConcurrentHashMap<BigInteger, ArrayList<StreamObserver<OperationResponse>>> registerHashGrpc;
     private ConcurrentHashMap<BigInteger, ArrayList<Integer>> registerHashSocket;
     private BlockingQueue<Operacao> toLog;
-    private BlockingQueue<Arriving> arriving;
+    private BlockingQueue<ArrivingSocket> arrivingSocket;
+    private BlockingQueue<ArrivingGrpc> arrivingGrpc;
 
     private static DataStorage dataStorage;
 
     private DataStorage() {
         executed = new ConcurrentHashMap<BigInteger, String>();
         toLog = new LinkedBlockingDeque<Operacao>();
-        arriving = new LinkedBlockingDeque<Arriving>();
+        arrivingSocket = new LinkedBlockingDeque<ArrivingSocket>();
+        arrivingGrpc = new LinkedBlockingDeque<ArrivingGrpc>();
         registerHashGrpc = new ConcurrentHashMap<BigInteger, ArrayList<StreamObserver<OperationResponse>>>();
         registerHashSocket = new ConcurrentHashMap<BigInteger, ArrayList<Integer>>();
 
@@ -129,21 +132,31 @@ public class DataStorage {
         return toLog.poll();
     }
 
-    public synchronized void addArriving(Arriving o) {
-        arriving.add(o);
+    public synchronized void addArrivingSocket(ArrivingSocket o) {
+        arrivingSocket.add(o);
     }
 
-    public synchronized Arriving pollArriving() {
-        return arriving.poll();
+    public synchronized ArrivingSocket pollArrivingSocket() {
+        return arrivingSocket.poll();
     }
+
+    public Queue<ArrivingSocket> getArrivingSocket() { return arrivingSocket; }
+
+    public synchronized void addArrivingGrpc(ArrivingGrpc o) {
+        arrivingGrpc.add(o);
+    }
+
+    public synchronized ArrivingGrpc pollArrivingGrpc() {
+        return arrivingGrpc.poll();
+    }
+
+    public Queue<ArrivingGrpc> getArrivingGrpc() { return arrivingGrpc; }
 
     public synchronized void removeExecuted(BigInteger chave) {
         executed.remove(chave);
     }
 
-    public Queue<Arriving> getArriving() {
-        return arriving;
-    }
+
 
     public Queue<Operacao> getLog() {
         return toLog;

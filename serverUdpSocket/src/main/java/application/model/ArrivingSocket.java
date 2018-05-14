@@ -1,6 +1,6 @@
 package application.model;
 
-public class Arriving {
+public class ArrivingSocket {
 
     public byte[] getPackage() {
         return mPackage;
@@ -19,7 +19,7 @@ public class Arriving {
         this.mPort = mPort;
     }
 
-    public Arriving(Integer mPort, byte[] mPackage) {
+    public ArrivingSocket(Integer mPort, byte[] mPackage) {
 
         this.mPort = mPort;
         this.mPackage = mPackage;
