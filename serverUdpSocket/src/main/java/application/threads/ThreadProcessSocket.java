@@ -44,6 +44,7 @@ public class ThreadProcessSocket extends Thread {
         while (true) {
             try {
                 if (!getInstance().getArrivingSocket().isEmpty()) {
+                    String resposta;
 
                     ArrivingSocket arrivingSocket = getInstance().pollArrivingSocket();
                     Operacao op = SerializeEstado.readOperacao(arrivingSocket.getPackage());
@@ -51,10 +52,14 @@ public class ThreadProcessSocket extends Thread {
 
                     System.out.println(op.toString());
 
-                    byte[] resposta = ExecuteHelper.executeOperation(op).getBytes();
+                    if(op.getOperacao()==4) {
+                        resposta = getInstance().addRegisterHashSocket(op.getChave(), arrivingSocket.getmPort());
+                    }else {
+                        resposta = ExecuteHelper.executeOperation(op);
+                    }
 
                     ExecuteHelper.respondClientSocket(serverSocket,
-                            resposta,
+                            resposta.getBytes(),
                             arrivingSocket.getmPort());
 
                 }
@@ -81,7 +86,7 @@ public class ThreadProcessSocket extends Thread {
                 break;
 
             case 2://Update
-                getInstance().addExecuted(operacao.getChave(), operacao.getValor());
+                getInstance().replaceExecuted(operacao.getChave(), operacao.getValor());
                 break;
 
             case 3://Delete

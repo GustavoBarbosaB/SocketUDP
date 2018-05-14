@@ -6,9 +6,7 @@ public enum OpcoesMenu {
     READ(1),
     UPDATE(2),
     DELETE(3),
-    REGISTER(4),
-    UNREGISTER(5);
-
+    REGISTER(4);
 
     private final int valor;
 

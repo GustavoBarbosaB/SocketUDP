@@ -13,9 +13,18 @@ import static application.helper.DataStorage.getInstance;
 public class ThreadProcessGrpc extends Thread {
 
     private static Logger logger = Logger.getLogger(Logger.GLOBAL_LOGGER_NAME);
+    private static ThreadProcessGrpc threadProcessGrpc;
 
-    public ThreadProcessGrpc() {
+    private ThreadProcessGrpc() {
 
+    }
+
+    public static ThreadProcessGrpc init(){
+        if(threadProcessGrpc==null) {
+            threadProcessGrpc = new ThreadProcessGrpc();
+            threadProcessGrpc.start();
+        }
+        return threadProcessGrpc;
     }
 
     @Override
@@ -23,17 +32,21 @@ public class ThreadProcessGrpc extends Thread {
 
         while (true) {
             if (!getInstance().getArrivingGrpc().isEmpty()) {
-
+                String response;
                 ArrivingGrpc arrivingGrpc = getInstance().pollArrivingGrpc();
                 Operation operationGrpc = arrivingGrpc.getRequestGrpc();
                 Operacao op = convertToOp(operationGrpc);
 
-
                 System.out.println(op.toString());
 
-                String response = ExecuteHelper.executeOperation(op);
-                ExecuteHelper.respondClientGrpc(arrivingGrpc.getResponseGrpc(), response);
+                if (op.getOperacao()==4)
+                    response = getInstance().addRegisterHashGrpc(op.getChave(),arrivingGrpc.getResponseGrpc());
 
+                else {
+                    response = ExecuteHelper.executeOperation(op);
+                }
+
+                ExecuteHelper.respondClientGrpc(arrivingGrpc.getResponseGrpc(), response);
             }
         }
 

@@ -17,11 +17,13 @@ import static application.helper.DataStorage.getInstance;
 
 public class GrpcSocketImp extends MakeOperationGrpc.MakeOperationImplBase {
 
+    public GrpcSocketImp(){
+        ThreadProcessGrpc.init();
+    }
+
     @Override
     public void makeOperation(Operation request, StreamObserver<OperationResponse> responseObserver) {
         getInstance().addArrivingGrpc(new ArrivingGrpc(request, responseObserver));
-        ThreadProcessGrpc threadProcessGrpc = new ThreadProcessGrpc();
-        threadProcessGrpc.start();
 
     }
 

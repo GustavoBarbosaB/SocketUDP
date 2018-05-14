@@ -1,6 +1,6 @@
 package application;
 
-public class MainMain {
+public class ServerMain {
 
     public static void main(String[] args) {
         Thread threadMainServer = new ThreadServerMain();

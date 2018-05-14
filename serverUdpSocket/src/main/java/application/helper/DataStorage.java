@@ -35,14 +35,14 @@ public class DataStorage {
 
     public synchronized static DataStorage getInstance() {
         if (dataStorage == null)
-        if (dataStorage == null)
-            dataStorage = new DataStorage();
+            if (dataStorage == null)
+                dataStorage = new DataStorage();
 
         return dataStorage;
     }
 
     public synchronized String getExecuted(BigInteger chave) {
-        if(executed.containsKey(chave))
+        if (executed.containsKey(chave))
             return executed.get(chave);
 
         return "Chave inexistente!";
@@ -67,16 +67,16 @@ public class DataStorage {
 
     }
 
-    public synchronized String addRegisterHashSocket(BigInteger chave, Integer port){
+    public synchronized String addRegisterHashSocket(BigInteger chave, Integer port) {
         ArrayList<Integer> listaClientes;
-        if(!executed.containsKey(chave))
+        if (!executed.containsKey(chave))
             return "Chave ainda não criada";
 
-        if(!registerHashSocket.containsKey(chave)){
+        if (!registerHashSocket.containsKey(chave)) {
             listaClientes = new ArrayList<Integer>();
             listaClientes.add(port);
-            registerHashSocket.put(chave,listaClientes);
-        }else{
+            registerHashSocket.put(chave, listaClientes);
+        } else {
             listaClientes = registerHashSocket.get(chave);
             listaClientes.add(port);
             registerHashSocket.put(chave, listaClientes);
@@ -85,18 +85,12 @@ public class DataStorage {
     }
 
 
+    public synchronized ArrayList<Integer> getRegisterHashSocket(BigInteger chave) {
+        return registerHashSocket.get(chave);
 
-    public synchronized ArrayList<Integer> getRegisterHashSocket(BigInteger chave){
-        ArrayList<Integer> listaClientes;
-        if(!registerHashSocket.containsKey(chave)){
-            return null;
-        }
-        else{
-            return registerHashSocket.get(chave);
-        }
     }
 
-    public synchronized String addRegisterHash(BigInteger chave, StreamObserver<OperationResponse> ouvinte) {
+    public synchronized String addRegisterHashGrpc(BigInteger chave, StreamObserver<OperationResponse> ouvinte) {
         ArrayList<StreamObserver<OperationResponse>> listaClientes;
         if (!executed.containsKey(chave))
             return "Chave ainda não existente";
@@ -106,7 +100,7 @@ public class DataStorage {
         } else {
             listaClientes = registerHashGrpc.get(chave);
             listaClientes.add(ouvinte);
-            registerHashGrpc. put(chave, listaClientes);
+            registerHashGrpc.put(chave, listaClientes);
         }
         return "Registrado com sucesso!";
     }
@@ -114,14 +108,6 @@ public class DataStorage {
 
     public synchronized ArrayList<StreamObserver<OperationResponse>> getRegisterHashGrpc(BigInteger chave) {
         return registerHashGrpc.get(chave);
-    }
-
-    public synchronized void removeRegisterHashGrpc(BigInteger chave) {
-        registerHashGrpc.remove(chave);
-    }
-
-    public synchronized void removeRegisterHashSocket(BigInteger chave) {
-        registerHashGrpc.remove(chave);
     }
 
     public synchronized void addLog(Operacao o) {
@@ -141,7 +127,9 @@ public class DataStorage {
         return arrivingSocket.poll();
     }
 
-    public Queue<ArrivingSocket> getArrivingSocket() { return arrivingSocket; }
+    public Queue<ArrivingSocket> getArrivingSocket() {
+        return arrivingSocket;
+    }
 
     public synchronized void addArrivingGrpc(ArrivingGrpc o) {
         arrivingGrpc.add(o);
@@ -151,10 +139,14 @@ public class DataStorage {
         return arrivingGrpc.poll();
     }
 
-    public Queue<ArrivingGrpc> getArrivingGrpc() { return arrivingGrpc; }
+    public Queue<ArrivingGrpc> getArrivingGrpc() {
+        return arrivingGrpc;
+    }
 
     public synchronized void removeExecuted(BigInteger chave) {
         executed.remove(chave);
+        registerHashSocket.remove(chave);
+        registerHashGrpc.remove(chave);
     }
 
 

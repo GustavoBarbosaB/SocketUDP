@@ -21,10 +21,6 @@ public class ClientMain {
     private static DatagramSocket clientSocket = null;
 
 
-
-
-
-
     public static void main(String args[]) throws IOException {
         clientSocket = new DatagramSocket();
         application.factory.Operacao operacao;
