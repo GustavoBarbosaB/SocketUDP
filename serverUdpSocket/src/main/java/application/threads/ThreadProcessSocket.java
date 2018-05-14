@@ -33,7 +33,7 @@ public class ThreadProcessSocket extends Thread {
         List<Operacao> operacaos = threadLogger.getLogList();
         if (operacaos != null) {
             for (Operacao operacao : operacaos) {
-                executeOperation(operacao);
+                ExecuteHelper.executeLogOperation(operacao);
                 String message = "EXECUTE:" + "Op:" + operacao.getOperacao()
                         + " Chave: " + operacao.getChave()
                         + " Valor: " + operacao.getValor();
@@ -72,29 +72,4 @@ public class ThreadProcessSocket extends Thread {
 
     }
 
-
-    private static void executeOperation(Operacao operacao) {
-
-        switch (operacao.getOperacao()) {
-
-            case 0://Create
-                getInstance().addExecuted(operacao.getChave(), operacao.getValor());
-                break;
-
-            case 1://Read
-                getInstance().getExecuted(operacao.getChave());
-                break;
-
-            case 2://Update
-                getInstance().replaceExecuted(operacao.getChave(), operacao.getValor());
-                break;
-
-            case 3://Delete
-                getInstance().removeExecuted(operacao.getChave());
-                break;
-
-            default:
-                break;
-        }
-    }
 }

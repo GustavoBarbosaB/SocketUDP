@@ -14,6 +14,8 @@ import java.net.InetAddress;
 import java.net.UnknownHostException;
 import java.util.ArrayList;
 
+import static application.helper.DataStorage.getInstance;
+
 public class ExecuteHelper extends Thread {
 
 
@@ -107,6 +109,31 @@ public class ExecuteHelper extends Thread {
         for (StreamObserver<OperationResponse> client : clientsGrpc) {
             respondClientGrpc(client,
                     resposta);
+        }
+    }
+
+    public static void executeLogOperation(Operacao operacao) {
+
+        switch (operacao.getOperacao()) {
+
+            case 0://Create
+                getInstance().addExecuted(operacao.getChave(), operacao.getValor());
+                break;
+
+            case 1://Read
+                getInstance().getExecuted(operacao.getChave());
+                break;
+
+            case 2://Update
+                getInstance().replaceExecuted(operacao.getChave(), operacao.getValor());
+                break;
+
+            case 3://Delete
+                getInstance().removeExecuted(operacao.getChave());
+                break;
+
+            default:
+                break;
         }
     }
 }
