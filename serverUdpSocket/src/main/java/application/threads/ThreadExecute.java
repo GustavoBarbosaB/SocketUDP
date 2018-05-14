@@ -69,7 +69,7 @@ public class ThreadExecute extends Thread {
     public void respondClientGrpc(String resposta){
         OperationResponse response = OperationResponse.newBuilder()
                 .setResponse(resposta)
-                //.setValor("//E ESSE CAMPO ??//")
+                .setValor("//E ESSE CAMPO ??//")
                 .build();
 
         responseGrpc.onNext(response);

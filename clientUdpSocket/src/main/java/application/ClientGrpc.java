@@ -4,6 +4,7 @@ import application.model.OpcoesMenu;
 import io.grpc.ManagedChannel;
 import io.grpc.ManagedChannelBuilder;
 import io.grpc.StatusRuntimeException;
+import io.grpc.stub.StreamObserver;
 import org.socketUdp.grpc.MakeOperationGrpc;
 import org.socketUdp.grpc.Operation;
 import org.socketUdp.grpc.OperationResponse;
@@ -12,10 +13,11 @@ import java.io.UnsupportedEncodingException;
 import java.math.BigInteger;
 import java.util.Scanner;
 import java.util.concurrent.TimeUnit;
+import java.util.stream.Stream;
 
 public class ClientGrpc {
     private final ManagedChannel channel;
-    private final MakeOperationGrpc.MakeOperationBlockingStub blockingStub;
+    private final MakeOperationGrpc.MakeOperationStub stub;
 
     public ClientGrpc(String host, int port){
         this(ManagedChannelBuilder.forAddress(host, port)
@@ -25,7 +27,7 @@ public class ClientGrpc {
 
     ClientGrpc(ManagedChannel channel) {
         this.channel = channel;
-        blockingStub = MakeOperationGrpc.newBlockingStub(channel);
+        stub = MakeOperationGrpc.newStub(channel);
     }
 
     public void shutdown() throws InterruptedException {
@@ -42,21 +44,35 @@ public class ClientGrpc {
             return;
         }
         
-        Operation operation = Operation.newBuilder()
+        final Operation operation = Operation.newBuilder()
                 .setOp(op)
                 .setTamChave(chaveNova.toByteArray().length)
                 .setChave(chave)
                 .setTamValor(valor.getBytes("UTF-16").length-2)
                 .setValor(valor)
                 .build();
-        OperationResponse response;
+        StreamObserver<OperationResponse> response = new StreamObserver<OperationResponse>() {
+            @Override
+            public void onNext(OperationResponse operationResponse) {
+                System.out.println(operationResponse.getValor()+ " " + operationResponse.getResponse());
+            }
+
+            @Override
+            public void onError(Throwable throwable) {
+
+            }
+
+            @Override
+            public void onCompleted() {
+                System.out.println("Disconnected");
+            }
+        };
         try {
-            response = blockingStub.makeOperation(operation);
+            stub.makeOperation(operation, response);
         } catch (StatusRuntimeException e) {
             System.out.println(e.getMessage());
             return;
         }
-        System.out.println("DADOS: " + response.getResponse() + "/" + response.getValor());
     }
 
 

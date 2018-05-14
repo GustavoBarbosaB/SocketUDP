@@ -24,7 +24,6 @@ public class GrpcSocketImp extends MakeOperationGrpc.MakeOperationImplBase {
         ThreadProcessGrpc threadProcessGrpc = new ThreadProcessGrpc();
         threadProcessGrpc.start();
 
-
     }
 
     public String execute(Operacao op) throws IOException {

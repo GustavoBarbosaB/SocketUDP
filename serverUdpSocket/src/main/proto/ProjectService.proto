@@ -16,5 +16,5 @@ message OperationResponse {
 }
 
 service MakeOperation {
-    rpc makeOperation(Operation) returns (OperationResponse);
+    rpc makeOperation(Operation) returns (stream OperationResponse);
 }
