@@ -6,27 +6,13 @@ import java.util.List;
 
 public class FileStorageHelper {
 
-    private static final String FILE_NAME = "server_log.txt";
-
     private File file;
-    private static FileStorageHelper fileStorageHelper;
 
-    private FileStorageHelper() {
-        init();
+    public FileStorageHelper(String fileName) {
+        file = new File(fileName);
     }
 
-    private void init() {
-        file = new File(FILE_NAME);
-    }
-
-    public static FileStorageHelper getInstance() {
-        if(fileStorageHelper == null) {
-            fileStorageHelper = new FileStorageHelper();
-        }
-        return fileStorageHelper;
-    }
-
-    public <T> void saveLogData(List<T> list){
+    public <T> void saveData(List<T> list){
         if(list != null) {
             try {
                 FileOutputStream f = new FileOutputStream(file);
@@ -45,15 +31,15 @@ public class FileStorageHelper {
         }
     }
 
-    public <T> void saveLogData(T item){
+    public <T> void saveData(T item){
         if(item != null) {
-            List<T> list = recoverLogData();
+            List<T> list = recoverData();
             list.add(item);
-            saveLogData(list);
+            saveData(list);
         }
     }
 
-    public <T> List<T> recoverLogData() {
+    public <T> List<T> recoverData() {
         List<T> list = new ArrayList<T>();
         try {
             FileInputStream f = new FileInputStream(file);
