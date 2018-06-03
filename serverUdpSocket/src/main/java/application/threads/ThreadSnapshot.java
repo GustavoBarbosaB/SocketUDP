@@ -1,5 +1,6 @@
 package application.threads;
 
+import application.helper.DataStorage;
 import application.helper.FileStorageHelper;
 import application.model.Snapshot;
 
@@ -9,7 +10,7 @@ import java.util.concurrent.TimeUnit;
 
 public class ThreadSnapshot extends Thread {
 
-    private static final long TIME_DELAY = 5;        //MINUTES
+    private static final long TIME_DELAY = 5;           //MINUTES
     private static final long TIME_INTERVAL = 5;        //MINUTES
     private static final String FILE_NAME = "server_snapshot.txt";
 
@@ -33,7 +34,14 @@ public class ThreadSnapshot extends Thread {
         Runnable runnable = new Runnable() {
             @Override
             public void run() {
-                //TODO Save snapshot
+                Snapshot snapshot = new Snapshot(
+                        DataStorage.getInstance().getRegisterHashGrpc(),
+                        DataStorage.getInstance().getRegisterHashSocket(),
+                        DataStorage.getInstance().getArrivingSocket(),
+                        DataStorage.getInstance().getArrivingGrpc()
+                );
+                updateLogFile(snapshot);
+                System.out.println("SAVE SNAPSHOT");
             }
         };
         ScheduledExecutorService service = Executors.newSingleThreadScheduledExecutor();

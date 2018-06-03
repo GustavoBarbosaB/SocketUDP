@@ -127,10 +127,6 @@ public class DataStorage {
         return arrivingSocket.poll();
     }
 
-    public Queue<ArrivingSocket> getArrivingSocket() {
-        return arrivingSocket;
-    }
-
     public synchronized void addArrivingGrpc(ArrivingGrpc o) {
         arrivingGrpc.add(o);
     }
@@ -139,9 +135,6 @@ public class DataStorage {
         return arrivingGrpc.poll();
     }
 
-    public Queue<ArrivingGrpc> getArrivingGrpc() {
-        return arrivingGrpc;
-    }
 
     public synchronized void removeExecuted(BigInteger chave) {
         executed.remove(chave);
@@ -149,8 +142,39 @@ public class DataStorage {
         registerHashGrpc.remove(chave);
     }
 
-
-    public Queue<Operacao> getLog() {
+    public synchronized Queue<Operacao> getLog() {
         return toLog;
+    }
+
+    public synchronized ConcurrentHashMap<BigInteger, ArrayList<StreamObserver<OperationResponse>>> getRegisterHashGrpc() {
+        return registerHashGrpc;
+    }
+
+    public synchronized void setRegisterHashGrpc(ConcurrentHashMap<BigInteger, ArrayList<StreamObserver<OperationResponse>>> registerHashGrpc) {
+        this.registerHashGrpc = registerHashGrpc;
+    }
+
+    public synchronized ConcurrentHashMap<BigInteger, ArrayList<Integer>> getRegisterHashSocket() {
+        return registerHashSocket;
+    }
+
+    public synchronized void setRegisterHashSocket(ConcurrentHashMap<BigInteger, ArrayList<Integer>> registerHashSocket) {
+        this.registerHashSocket = registerHashSocket;
+    }
+
+    public  LinkedBlockingDeque<ArrivingSocket> getArrivingSocket() {
+        return (LinkedBlockingDeque<ArrivingSocket>) arrivingSocket;
+    }
+
+    public void setArrivingSocket(LinkedBlockingDeque<ArrivingSocket> arrivingSocket) {
+        this.arrivingSocket = arrivingSocket;
+    }
+
+    public LinkedBlockingDeque<ArrivingGrpc> getArrivingGrpc() {
+        return (LinkedBlockingDeque<ArrivingGrpc>) arrivingGrpc;
+    }
+
+    public void setArrivingGrpc(LinkedBlockingDeque<ArrivingGrpc> arrivingGrpc) {
+        this.arrivingGrpc = arrivingGrpc;
     }
 }

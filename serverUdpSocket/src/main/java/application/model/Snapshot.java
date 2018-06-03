@@ -46,16 +46,16 @@ public class Snapshot implements Serializable {
         this.registerHashSocket = registerHashSocket;
     }
 
-    public Queue<ArrivingSocket> getArrivingSocket() {
-        return arrivingSocket;
+    public  LinkedBlockingDeque<ArrivingSocket> getArrivingSocket() {
+        return (LinkedBlockingDeque<ArrivingSocket>) arrivingSocket;
     }
 
     public void setArrivingSocket(LinkedBlockingDeque<ArrivingSocket> arrivingSocket) {
         this.arrivingSocket = arrivingSocket;
     }
 
-    public Queue<ArrivingGrpc> getArrivingGrpc() {
-        return arrivingGrpc;
+    public LinkedBlockingDeque<ArrivingGrpc> getArrivingGrpc() {
+        return (LinkedBlockingDeque<ArrivingGrpc>) arrivingGrpc;
     }
 
     public void setArrivingGrpc(LinkedBlockingDeque<ArrivingGrpc> arrivingGrpc) {
