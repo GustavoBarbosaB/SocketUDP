@@ -3,8 +3,7 @@
   <component name="ChangeListManager">
     <list default="true" id="13ce6ada-96b5-4fc6-8e9f-808e6992d296" name="Default" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/serverUdpSocket/src/main/java/application/model/Snapshot.java" beforeDir="false" afterPath="$PROJECT_DIR$/serverUdpSocket/src/main/java/application/model/Snapshot.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/serverUdpSocket/src/main/java/application/threads/ThreadProcessSocket.java" beforeDir="false" afterPath="$PROJECT_DIR$/serverUdpSocket/src/main/java/application/threads/ThreadProcessSocket.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/serverUdpSocket/src/main/java/application/helper/FileStorageHelper.java" beforeDir="false" afterPath="$PROJECT_DIR$/serverUdpSocket/src/main/java/application/helper/FileStorageHelper.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/serverUdpSocket/src/main/java/application/threads/ThreadSnapshot.java" beforeDir="false" afterPath="$PROJECT_DIR$/serverUdpSocket/src/main/java/application/threads/ThreadSnapshot.java" afterDir="false" />
     </list>
     <ignored path="$PROJECT_DIR$/serverUdpSocket/target/" />
@@ -50,8 +49,8 @@
       <file leaf-file-name="ThreadProcessSocket.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/serverUdpSocket/src/main/java/application/threads/ThreadProcessSocket.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="240">
-              <caret line="31" column="59" selection-start-line="31" selection-start-column="55" selection-end-line="31" selection-end-column="59" />
+            <state relative-caret-position="60">
+              <caret line="31" selection-start-line="31" selection-end-line="31" />
               <folding>
                 <element signature="imports" expanded="true" />
                 <element signature="e#507#508#0" expanded="true" />
@@ -63,16 +62,15 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="ThreadSnapshot.java" pinned="false" current-in-tab="true">
+      <file leaf-file-name="ThreadSnapshot.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/serverUdpSocket/src/main/java/application/threads/ThreadSnapshot.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="159">
-              <caret line="13" column="47" selection-start-line="13" selection-start-column="47" selection-end-line="13" selection-end-column="47" />
+            <state relative-caret-position="153">
+              <caret line="52" selection-start-line="52" selection-end-line="52" />
               <folding>
                 <element signature="imports" expanded="true" />
                 <element signature="e#960#1108#0" expanded="true" />
                 <element signature="e#1107#1108#0" expanded="true" />
-                <element signature="e#1301#1302#0" expanded="true" />
                 <element signature="e#1356#1357#0" expanded="true" />
               </folding>
             </state>
@@ -101,11 +99,11 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="FileStorageHelper.java" pinned="false" current-in-tab="false">
+      <file leaf-file-name="FileStorageHelper.java" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/serverUdpSocket/src/main/java/application/helper/FileStorageHelper.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="309">
-              <caret line="58" column="38" selection-start-line="58" selection-start-column="23" selection-end-line="58" selection-end-column="38" />
+            <state relative-caret-position="399">
+              <caret line="35" column="42" selection-start-line="35" selection-start-column="42" selection-end-line="35" selection-end-column="42" />
               <folding>
                 <element signature="e#379#380#0" expanded="true" />
                 <element signature="e#429#430#0" expanded="true" />
@@ -195,12 +193,12 @@
         <option value="$PROJECT_DIR$/serverUdpSocket/src/main/java/application/helper/ExecuteHelper.java" />
         <option value="$PROJECT_DIR$/serverUdpSocket/src/main/java/application/threads/ThreadProcessGrpc.java" />
         <option value="$PROJECT_DIR$/serverUdpSocket/src/main/java/application/GrpcSocketImp.java" />
-        <option value="$PROJECT_DIR$/serverUdpSocket/src/main/java/application/helper/FileStorageHelper.java" />
         <option value="$PROJECT_DIR$/serverUdpSocket/src/main/java/application/threads/ThreadLogger.java" />
         <option value="$PROJECT_DIR$/serverUdpSocket/src/main/java/application/helper/DataStorage.java" />
         <option value="$PROJECT_DIR$/serverUdpSocket/src/main/java/application/model/Snapshot.java" />
         <option value="$PROJECT_DIR$/serverUdpSocket/src/main/java/application/threads/ThreadProcessSocket.java" />
         <option value="$PROJECT_DIR$/serverUdpSocket/src/main/java/application/threads/ThreadSnapshot.java" />
+        <option value="$PROJECT_DIR$/serverUdpSocket/src/main/java/application/helper/FileStorageHelper.java" />
       </list>
     </option>
   </component>
@@ -234,6 +232,52 @@
       <pane id="ProjectPane">
         <subPane>
           <expand>
+            <path>
+              <item name="SocketUDP" type="b2602c69:ProjectViewProjectNode" />
+              <item name="clientUdpSocket" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="SocketUDP" type="b2602c69:ProjectViewProjectNode" />
+              <item name="clientUdpSocket" type="462c0819:PsiDirectoryNode" />
+              <item name="src" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="SocketUDP" type="b2602c69:ProjectViewProjectNode" />
+              <item name="clientUdpSocket" type="462c0819:PsiDirectoryNode" />
+              <item name="src" type="462c0819:PsiDirectoryNode" />
+              <item name="main" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="SocketUDP" type="b2602c69:ProjectViewProjectNode" />
+              <item name="clientUdpSocket" type="462c0819:PsiDirectoryNode" />
+              <item name="src" type="462c0819:PsiDirectoryNode" />
+              <item name="main" type="462c0819:PsiDirectoryNode" />
+              <item name="java" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="SocketUDP" type="b2602c69:ProjectViewProjectNode" />
+              <item name="clientUdpSocket" type="462c0819:PsiDirectoryNode" />
+              <item name="src" type="462c0819:PsiDirectoryNode" />
+              <item name="main" type="462c0819:PsiDirectoryNode" />
+              <item name="java" type="462c0819:PsiDirectoryNode" />
+              <item name="application" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="SocketUDP" type="b2602c69:ProjectViewProjectNode" />
+              <item name="clientUdpSocket" type="462c0819:PsiDirectoryNode" />
+              <item name="src" type="462c0819:PsiDirectoryNode" />
+              <item name="main" type="462c0819:PsiDirectoryNode" />
+              <item name="java" type="462c0819:PsiDirectoryNode" />
+              <item name="application" type="462c0819:PsiDirectoryNode" />
+              <item name="threads" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="SocketUDP" type="b2602c69:ProjectViewProjectNode" />
+              <item name="clientUdpSocket" type="462c0819:PsiDirectoryNode" />
+              <item name="src" type="462c0819:PsiDirectoryNode" />
+              <item name="main" type="462c0819:PsiDirectoryNode" />
+              <item name="resources" type="462c0819:PsiDirectoryNode" />
+            </path>
             <path>
               <item name="SocketUDP" type="b2602c69:ProjectViewProjectNode" />
               <item name="serverUdpSocket" type="462c0819:PsiDirectoryNode" />
@@ -373,7 +417,7 @@
       </list>
     </option>
   </component>
-  <component name="RunManager" selected="Application.ServerMain">
+  <component name="RunManager" selected="Application.ClientGrpc">
     <configuration name="ClientGrpc" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
       <option name="MAIN_CLASS_NAME" value="application.ClientGrpc" />
       <module name="clientUdpSocket" />
@@ -449,9 +493,9 @@
     </list>
     <recent_temporary>
       <list>
+        <item itemvalue="Application.ClientGrpc" />
         <item itemvalue="Application.ServerMain" />
         <item itemvalue="Application.MainMain" />
-        <item itemvalue="Application.ClientGrpc" />
         <item itemvalue="Application.ClientMain" />
         <item itemvalue="Application.ServerGrpc" />
       </list>
@@ -525,7 +569,14 @@
       <option name="project" value="LOCAL" />
       <updated>1528036218334</updated>
     </task>
-    <option name="localTasksCounter" value="9" />
+    <task id="LOCAL-00009" summary="Nova thread para snapshot.">
+      <created>1528037357429</created>
+      <option name="number" value="00009" />
+      <option name="presentableId" value="LOCAL-00009" />
+      <option name="project" value="LOCAL" />
+      <updated>1528037357429</updated>
+    </task>
+    <option name="localTasksCounter" value="10" />
     <servers />
   </component>
   <component name="TimeTrackingManager">
@@ -557,7 +608,7 @@
       <window_info anchor="bottom" id="Terminal" order="7" weight="0.4448052" />
       <window_info id="Capture Tool" order="2" />
       <window_info id="Designer" order="2" />
-      <window_info content_ui="combo" id="Project" order="0" sideWeight="0.49909255" weight="0.27729085" />
+      <window_info content_ui="combo" id="Project" order="0" sideWeight="0.49909255" visible="true" weight="0.27729085" />
       <window_info anchor="bottom" id="Find" order="1" weight="0.32795697" />
       <window_info id="Structure" order="1" sideWeight="0.5009074" side_tool="true" weight="0.16577825" />
       <window_info anchor="right" id="Ant Build" order="1" weight="0.25" />
@@ -637,8 +688,20 @@
           <properties />
           <option name="timeStamp" value="33" />
         </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/serverUdpSocket/src/main/java/application/threads/ThreadSnapshot.java</url>
+          <line>52</line>
+          <properties />
+          <option name="timeStamp" value="34" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/serverUdpSocket/src/main/java/application/helper/FileStorageHelper.java</url>
+          <line>42</line>
+          <properties />
+          <option name="timeStamp" value="35" />
+        </line-breakpoint>
       </breakpoints>
-      <option name="time" value="34" />
+      <option name="time" value="36" />
     </breakpoint-manager>
   </component>
   <component name="editorHistoryManager">
@@ -924,20 +987,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/serverUdpSocket/src/main/java/application/threads/ThreadProcessSocket.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="240">
-          <caret line="31" column="59" selection-start-line="31" selection-start-column="55" selection-end-line="31" selection-end-column="59" />
-          <folding>
-            <element signature="imports" expanded="true" />
-            <element signature="e#507#508#0" expanded="true" />
-            <element signature="e#542#543#0" expanded="true" />
-            <element signature="e#734#735#0" expanded="true" />
-            <element signature="e#782#783#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/serverUdpSocket/src/main/java/application/threads/ThreadLogger.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="-147">
@@ -948,17 +997,6 @@
             <element signature="e#468#469#0" expanded="true" />
             <element signature="e#983#984#0" expanded="true" />
             <element signature="e#1038#1039#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/serverUdpSocket/src/main/java/application/helper/FileStorageHelper.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="309">
-          <caret line="58" column="38" selection-start-line="58" selection-start-column="23" selection-end-line="58" selection-end-column="38" />
-          <folding>
-            <element signature="e#379#380#0" expanded="true" />
-            <element signature="e#429#430#0" expanded="true" />
           </folding>
         </state>
       </provider>
@@ -974,16 +1012,40 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/serverUdpSocket/src/main/java/application/threads/ThreadProcessSocket.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="60">
+          <caret line="31" selection-start-line="31" selection-end-line="31" />
+          <folding>
+            <element signature="imports" expanded="true" />
+            <element signature="e#507#508#0" expanded="true" />
+            <element signature="e#542#543#0" expanded="true" />
+            <element signature="e#734#735#0" expanded="true" />
+            <element signature="e#782#783#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/serverUdpSocket/src/main/java/application/threads/ThreadSnapshot.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="159">
-          <caret line="13" column="47" selection-start-line="13" selection-start-column="47" selection-end-line="13" selection-end-column="47" />
+        <state relative-caret-position="153">
+          <caret line="52" selection-start-line="52" selection-end-line="52" />
           <folding>
             <element signature="imports" expanded="true" />
             <element signature="e#960#1108#0" expanded="true" />
             <element signature="e#1107#1108#0" expanded="true" />
-            <element signature="e#1301#1302#0" expanded="true" />
             <element signature="e#1356#1357#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/serverUdpSocket/src/main/java/application/helper/FileStorageHelper.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="399">
+          <caret line="35" column="42" selection-start-line="35" selection-start-column="42" selection-end-line="35" selection-end-column="42" />
+          <folding>
+            <element signature="e#379#380#0" expanded="true" />
+            <element signature="e#429#430#0" expanded="true" />
           </folding>
         </state>
       </provider>

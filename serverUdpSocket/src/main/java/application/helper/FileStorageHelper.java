@@ -33,7 +33,7 @@ public class FileStorageHelper {
 
     public <T> void saveLogData(T item){
         if(item != null) {
-            List<T> list = recoverData();
+            List<T> list = recoverListData();
             list.add(item);
             saveData(list);
         }
