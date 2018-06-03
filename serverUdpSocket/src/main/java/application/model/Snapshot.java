@@ -12,6 +12,7 @@ import java.util.concurrent.LinkedBlockingDeque;
 
 public class Snapshot implements Serializable {
 
+    private long version;
     private ConcurrentHashMap<BigInteger, String> executed;
     private ConcurrentHashMap<BigInteger, ArrayList<StreamObserver<OperationResponse>>> registerHashGrpc;
     private ConcurrentHashMap<BigInteger, ArrayList<Integer>> registerHashSocket;
@@ -20,16 +21,26 @@ public class Snapshot implements Serializable {
 
     public Snapshot() {}
 
-    public Snapshot(ConcurrentHashMap<BigInteger, String> executed,
+    public Snapshot(long version,
+                    ConcurrentHashMap<BigInteger, String> executed,
                     ConcurrentHashMap<BigInteger, ArrayList<StreamObserver<OperationResponse>>> registerHashGrpc,
                     ConcurrentHashMap<BigInteger, ArrayList<Integer>> registerHashSocket,
                     LinkedBlockingDeque<ArrivingSocket> arrivingSocket,
                     LinkedBlockingDeque<ArrivingGrpc> arrivingGrpc) {
+        this.version = version;
         this.executed = executed;
         this.registerHashGrpc = registerHashGrpc;
         this.registerHashSocket = registerHashSocket;
         this.arrivingSocket = arrivingSocket;
         this.arrivingGrpc = arrivingGrpc;
+    }
+
+    public long getVersion() {
+        return version;
+    }
+
+    public void setVersion(long version) {
+        this.version = version;
     }
 
     public ConcurrentHashMap<BigInteger, String> getExecuted() {

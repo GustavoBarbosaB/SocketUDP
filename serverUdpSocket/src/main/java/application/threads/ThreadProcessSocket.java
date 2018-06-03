@@ -32,14 +32,16 @@ public class ThreadProcessSocket extends Thread {
     public void run() {
 
         ThreadSnapshot threadSnapshot = ThreadSnapshot.init();
-        Snapshot snapshot = threadSnapshot.getSnapshot();
+        Snapshot snapshot = threadSnapshot.getTheMostCurrentSnapshot();
         if(snapshot != null) {
             DataStorage.getInstance().setExecuted(snapshot.getExecuted());
             DataStorage.getInstance().setRegisterHashGrpc(snapshot.getRegisterHashGrpc());
             DataStorage.getInstance().setRegisterHashSocket(snapshot.getRegisterHashSocket());
             DataStorage.getInstance().setArrivingSocket(snapshot.getArrivingSocket());
             DataStorage.getInstance().setArrivingGrpc(snapshot.getArrivingGrpc());
-            System.out.println("System Recovered");
+
+            String message = "System Recovered with version " + snapshot.getVersion();
+            System.out.println(message);
         }
 
         ThreadLogger threadLogger = ThreadLogger.init();
