@@ -146,6 +146,14 @@ public class DataStorage {
         return toLog;
     }
 
+    public synchronized ConcurrentHashMap<BigInteger, String> getExecuted() {
+        return executed;
+    }
+
+    public synchronized void setExecuted(ConcurrentHashMap<BigInteger, String> executed) {
+        this.executed = executed;
+    }
+
     public synchronized ConcurrentHashMap<BigInteger, ArrayList<StreamObserver<OperationResponse>>> getRegisterHashGrpc() {
         return registerHashGrpc;
     }

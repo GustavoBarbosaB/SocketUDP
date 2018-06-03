@@ -36,6 +36,7 @@ public class ThreadSnapshot extends Thread {
             @Override
             public void run() {
                 Snapshot snapshot = new Snapshot(
+                        DataStorage.getInstance().getExecuted(),
                         DataStorage.getInstance().getRegisterHashGrpc(),
                         DataStorage.getInstance().getRegisterHashSocket(),
                         DataStorage.getInstance().getArrivingSocket(),
