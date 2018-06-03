@@ -28,8 +28,8 @@ public class ThreadSnapshot extends Thread {
         }
     }
 
-    private static final long TIME_DELAY = 1;           //MINUTES
-    private static final long TIME_INTERVAL = 1;        //MINUTES
+    private static final long TIME_DELAY = 5;           //MINUTES
+    private static final long TIME_INTERVAL = 5;        //MINUTES
 
     private static ThreadSnapshot threadSnapshot;
 
