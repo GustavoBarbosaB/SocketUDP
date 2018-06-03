@@ -1,9 +1,11 @@
 package application.threads;
 
+import application.helper.DataStorage;
 import application.helper.ExecuteHelper;
 import application.helper.SerializeEstado;
 import application.model.ArrivingSocket;
 import application.model.Operacao;
+import application.model.Snapshot;
 
 import java.io.IOException;
 import java.net.DatagramSocket;
@@ -30,7 +32,15 @@ public class ThreadProcessSocket extends Thread {
     public void run() {
 
         ThreadSnapshot threadSnapshot = ThreadSnapshot.init();
-        //TODO Recover snapshot
+        Snapshot snapshot = threadSnapshot.getSnapshot();
+        if(snapshot != null) {
+            DataStorage.getInstance().setExecuted(snapshot.getExecuted());
+            DataStorage.getInstance().setRegisterHashGrpc(snapshot.getRegisterHashGrpc());
+            DataStorage.getInstance().setRegisterHashSocket(snapshot.getRegisterHashSocket());
+            DataStorage.getInstance().setArrivingSocket(snapshot.getArrivingSocket());
+            DataStorage.getInstance().setArrivingGrpc(snapshot.getArrivingGrpc());
+            System.out.println("System Recovered");
+        }
 
         ThreadLogger threadLogger = ThreadLogger.init();
         List<Operacao> operacaos = threadLogger.getLogList();
