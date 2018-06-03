@@ -1,6 +1,7 @@
 package application.threads;
 
 import application.helper.FileStorageHelper;
+import application.model.Snapshot;
 
 import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
@@ -37,5 +38,13 @@ public class ThreadSnapshot extends Thread {
         };
         ScheduledExecutorService service = Executors.newSingleThreadScheduledExecutor();
         service.scheduleAtFixedRate(runnable, TIME_DELAY, TIME_INTERVAL, TimeUnit.MINUTES);
+    }
+
+    private void updateLogFile(Snapshot snapshot) {
+        fileStorageHelper.saveLogData(snapshot);
+    }
+
+    Snapshot getSnapshot() {
+        return (Snapshot) fileStorageHelper.recoverData();
     }
 }

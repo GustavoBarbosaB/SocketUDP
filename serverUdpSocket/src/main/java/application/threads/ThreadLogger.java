@@ -37,10 +37,10 @@ public class ThreadLogger extends Thread {
     }
 
     private void updateLogFile(Operacao operacao) {
-        fileStorageHelper.saveData(operacao);
+        fileStorageHelper.saveLogData(operacao);
     }
 
     List<Operacao> getLogList() {
-        return fileStorageHelper.recoverData();
+        return fileStorageHelper.recoverListData();
     }
 }

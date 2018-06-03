@@ -31,7 +31,7 @@ public class FileStorageHelper {
         }
     }
 
-    public <T> void saveData(T item){
+    public <T> void saveLogData(T item){
         if(item != null) {
             List<T> list = recoverData();
             list.add(item);
@@ -39,7 +39,24 @@ public class FileStorageHelper {
         }
     }
 
-    public <T> List<T> recoverData() {
+    public <T> void saveData(T item){
+        if(item != null) {
+            try {
+                FileOutputStream f = new FileOutputStream(file);
+                ObjectOutputStream o = new ObjectOutputStream(f);
+
+                o.writeObject(item);
+
+                o.close();
+                f.close();
+
+            } catch (FileNotFoundException e) {
+            } catch (IOException e) {
+            }
+        }
+    }
+
+    public <T> List<T> recoverListData() {
         List<T> list = new ArrayList<T>();
         try {
             FileInputStream f = new FileInputStream(file);
@@ -63,5 +80,27 @@ public class FileStorageHelper {
             e.printStackTrace();
         }
         return list;
+    }
+
+    public <T> T recoverData() {
+        try {
+            FileInputStream f = new FileInputStream(file);
+            ObjectInputStream o = new ObjectInputStream(f);
+
+            T item = (T) o.readObject();
+            if(item != null) {
+                o.close();
+                f.close();
+                return item;
+            }
+
+            o.close();
+            f.close();
+        } catch (FileNotFoundException e) {
+        } catch (IOException e) {
+        } catch (ClassNotFoundException e) {
+            e.printStackTrace();
+        }
+        return null;
     }
 }
