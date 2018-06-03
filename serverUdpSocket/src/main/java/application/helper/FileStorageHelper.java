@@ -105,14 +105,12 @@ public class FileStorageHelper {
     }
 
     public void clearFile() {
-        if (file.delete()) {
-            try {
-                if(file.createNewFile()) {
-                    System.out.println("Clean file");
-                }
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
+        PrintWriter pw = null;
+        try {
+            pw = new PrintWriter(file.getName());
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
         }
+        pw.close();
     }
 }
