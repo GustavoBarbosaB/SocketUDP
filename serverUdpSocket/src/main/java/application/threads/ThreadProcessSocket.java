@@ -30,6 +30,7 @@ public class ThreadProcessSocket extends Thread {
     public void run() {
 
         ThreadSnapshot threadSnapshot = ThreadSnapshot.init();
+        //TODO Recover snapshot
 
         ThreadLogger threadLogger = ThreadLogger.init();
         List<Operacao> operacaos = threadLogger.getLogList();

@@ -103,4 +103,16 @@ public class FileStorageHelper {
         }
         return null;
     }
+
+    public void clearFile() {
+        if (file.delete()) {
+            try {
+                if(file.createNewFile()) {
+                    System.out.println("Clean file");
+                }
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
+    }
 }

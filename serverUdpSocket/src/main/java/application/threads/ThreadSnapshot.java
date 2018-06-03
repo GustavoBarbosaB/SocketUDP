@@ -44,6 +44,7 @@ public class ThreadSnapshot extends Thread {
                 );
                 updateLogFile(snapshot);
                 System.out.println("SAVE THE SNAPSHOT");
+                ThreadLogger.clearLog();
             }
         };
         ScheduledExecutorService service = Executors.newSingleThreadScheduledExecutor();

@@ -11,7 +11,7 @@ public class ThreadLogger extends Thread {
     private static final String FILE_NAME = "server_log.txt";
 
     private static ThreadLogger threadLogger;
-    private FileStorageHelper fileStorageHelper;
+    private static FileStorageHelper fileStorageHelper;
 
     private ThreadLogger(){
         fileStorageHelper = new FileStorageHelper(FILE_NAME);
@@ -23,6 +23,12 @@ public class ThreadLogger extends Thread {
             threadLogger.start();
         }
         return threadLogger;
+    }
+
+    static void clearLog() {
+        if(fileStorageHelper != null) {
+            fileStorageHelper.clearFile();
+        }
     }
 
     @Override
