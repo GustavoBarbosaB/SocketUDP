@@ -31,6 +31,7 @@ public class ThreadSnapshot extends Thread {
 
     @Override
     public void run(){
+        System.out.println("Prepare to save the snapshot");
         Runnable runnable = new Runnable() {
             @Override
             public void run() {
@@ -41,7 +42,7 @@ public class ThreadSnapshot extends Thread {
                         DataStorage.getInstance().getArrivingGrpc()
                 );
                 updateLogFile(snapshot);
-                System.out.println("SAVE SNAPSHOT");
+                System.out.println("SAVE THE SNAPSHOT");
             }
         };
         ScheduledExecutorService service = Executors.newSingleThreadScheduledExecutor();
@@ -49,7 +50,7 @@ public class ThreadSnapshot extends Thread {
     }
 
     private void updateLogFile(Snapshot snapshot) {
-        fileStorageHelper.saveLogData(snapshot);
+        fileStorageHelper.saveData(snapshot);
     }
 
     Snapshot getSnapshot() {

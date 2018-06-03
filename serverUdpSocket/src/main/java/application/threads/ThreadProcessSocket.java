@@ -29,6 +29,8 @@ public class ThreadProcessSocket extends Thread {
     @Override
     public void run() {
 
+        ThreadSnapshot threadSnapshot = ThreadSnapshot.init();
+
         ThreadLogger threadLogger = ThreadLogger.init();
         List<Operacao> operacaos = threadLogger.getLogList();
         if (operacaos != null) {
